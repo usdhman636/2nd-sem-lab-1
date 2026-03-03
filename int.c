@@ -13,7 +13,7 @@ int intDotProduct(const void* arg1, const void* arg2, void* result){
 	*(int*)result = *(int*)arg1 * *(int*)arg2;
         return 0;
 }
-int intPrint(const void* result){
+char intPrint(const void* result){
 
 	return *(int*)result;
 }
@@ -21,8 +21,8 @@ int intPrint(const void* result){
 itype* getIntType(){
 
 	if(INT_INPUT_TYPE == NULL){
-		INT_INPUT_TYPE = malloc(sizeof(itype))
-		if(INT_INPUT_TYPE == NULL) return -1;
+		INT_INPUT_TYPE = malloc(sizeof(itype));
+		if(INT_INPUT_TYPE == NULL) exit(1);
 		INT_INPUT_TYPE->size = sizeof(int);
         	INT_INPUT_TYPE->add = intAdd;
         	INT_INPUT_TYPE->dotProduct = intDotProduct;
