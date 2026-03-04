@@ -19,7 +19,7 @@ char x[10], y[10], z[10];
 float tempX = 0, tempY = 0, tempZ = 0;
 int vectorCount = -1;
 errors result = success;
-//vectors* vecRes = createVector(getFloatType(), tempX, tempX, tempX, &result);
+
 
 printf("welcome to my vectors program\nchoose an option\n");
 while(1){
@@ -106,7 +106,10 @@ while(1){
 			clear_input_buffer();
 			printf("\ninvalid input, try again");
 			continue;
-		}else clear_input_buffer(); break;
+		}else{
+			 clear_input_buffer();
+			 break;
+		}
 		}//inner while
 
 		while(1){
@@ -116,12 +119,20 @@ while(1){
 		clear_input_buffer();
 		printf("\ninvalid input, try again");
 		continue;
-		}else clear_input_buffer(); break;
+		}else{
+			 clear_input_buffer();
+			 break;}
 		}//inner while
+		//}//big while
+
+		if(checkType(vector, &add1, &add2) == -1){
+			printf("\nincompatible types\n");
+			break;
+		}
 		vectorCount += 1;
-		vector[vectorCount] = vectorAdd(vector, &vectorCount, &result, &add1, &add2);
-		if(result == differentTypes) printf("\ncan't add vectors of different types\n");
-		}//while
+		vector[vectorCount] = vectorAdd(vector, &add1, &add2);
+		break;
+		}//big while
 	}// if option = 4
 
 }// main while loop

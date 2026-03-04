@@ -26,6 +26,7 @@ itype* getFloatType(){
                 FLOAT_INPUT_TYPE = malloc(sizeof(itype));
                 if(FLOAT_INPUT_TYPE == NULL) exit(1);
                 FLOAT_INPUT_TYPE->size = sizeof(float);
+		FLOAT_INPUT_TYPE->value = 1;
                 FLOAT_INPUT_TYPE->add = floatAdd;
                 FLOAT_INPUT_TYPE->dotProduct = floatDotProduct;
                 FLOAT_INPUT_TYPE->print = floatPrint;

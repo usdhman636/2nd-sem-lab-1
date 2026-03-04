@@ -36,17 +36,13 @@ vectors* createVector(itype* TYPE, float x, float y, float z, errors* result){
 	return vector;
 }
 
-vectors* vectorAdd(const vectors* v1[], int *vectorCount, errors* result, const int* add1, const int* add2){
+vectors* vectorAdd(vectors* v1[], const int* add1, const int* add2){
+
 
 	vectors* vecRes = malloc(sizeof(vectors));
-	if(v1[*add1]->type != v1[*add2]->type){
-	*vectorCount -= 1;
-	*result = differentTypes;
-	 return NULL;
-	}
-	if(v1[*add1]->type == getIntType()){
 
-		//vectors* vecRes = malloc(sizeof(vectors));
+	if(v1[*add1]->type->value == 0){
+
 		vecRes->type = getIntType();
 		vecRes->x = malloc(vecRes->type->size);
 		vecRes->y = malloc(vecRes->type->size);
@@ -54,12 +50,12 @@ vectors* vectorAdd(const vectors* v1[], int *vectorCount, errors* result, const 
 
 	}else {
 
-		//vectors* vecRes = malloc(sizeof(vectors));
 		vecRes->type = getFloatType();
 		vecRes->x = malloc(vecRes->type->size);
                 vecRes->y = malloc(vecRes->type->size);
                 vecRes->z = malloc(vecRes->type->size);
 	}
+
 	v1[*add1]->type->add(v1[*add1]->x, v1[*add2]->x, vecRes->x);
         v1[*add1]->type->add(v1[*add1]->y, v1[*add2]->y, vecRes->y);
         v1[*add1]->type->add(v1[*add1]->z, v1[*add2]->z, vecRes->z);
@@ -145,9 +141,11 @@ errors printVectors(vectors* v1[], const int* vectorCount){
 
 }
 
-/*int checkType(const void* x, const void* y, const void* z){
-
-	if(*(float*)x == *(int*)x && *(float*)y == *(int*)y && *(float*)z == *(int*)z){
-		return 0; // int type
+int checkType(vectors* v1[], int* add1, int* add2){
+	printf("haha");
+	if(v1[*add1]->type->value != v1[*add2]->type->value){
+		return -1; // different types
+	}else if(v1[*add1]->type->value == 0){
+		 return 0; // int type
 	}else return 1; // float type
-}*/
+}

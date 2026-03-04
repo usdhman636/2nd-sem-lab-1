@@ -16,7 +16,7 @@ typedef struct{
 
 vectors* createVector(itype* type, float x, float y, float z, errors* result);
 
-vectors* vectorAdd(const vectors* v1[], int* vectorCount, errors* result, const int* add1, const int* add2);
+vectors* vectorAdd(vectors* v1[], const int* add1, const int* add2);
 
 errors vectorDotProduct(const vectors* v1, const vectors* v2, void* result);
 
@@ -26,6 +26,6 @@ errors freeVector(vectors* v1);
 
 errors printVectors(vectors* v1[], const int* vectorCount);
 
-//int checkType(const void* x, const void* y, const void* z);
+int checkType(vectors* v1[], int* add1, int* add2);
 
 #endif

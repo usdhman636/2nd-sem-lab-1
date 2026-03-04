@@ -27,6 +27,7 @@ itype* getIntType(){
 		INT_INPUT_TYPE = malloc(sizeof(itype));
 		if(INT_INPUT_TYPE == NULL) exit(1);
 		INT_INPUT_TYPE->size = sizeof(int);
+		INT_INPUT_TYPE->value = 0;
         	INT_INPUT_TYPE->add = intAdd;
         	INT_INPUT_TYPE->dotProduct = intDotProduct;
         	INT_INPUT_TYPE->print = intPrint;
