@@ -16,7 +16,7 @@ int option = 0;
 vectors *vector[MAXVECTORS];
 char x[10], y[10], z[10];
 float tempX = 0, tempY = 0, tempZ = 0;
-int vectorCount = 0;
+int vectorCount = -1;
 errors result = success;
 
 printf("welcome to my vectors program\nchoose an option\n");
@@ -50,17 +50,30 @@ while(1){
 	}
 
 	if(option == 1){
-	  if(vectorCount < MAXVECTORS){
+	  if(vectorCount < MAXVECTORS - 1){
+		vectorCount += 1;
 		if(createVectorScan(x, y, z, &tempX, &tempY, &tempZ) == 0){
 		vector[vectorCount] = createVector(getIntType(), &tempX, &tempY, &tempZ, &result);
-		vectorCount += 1;
+		//vectorCount += 1;
 		}else{
 		 vector[vectorCount] = createVector(getFloatType(), &tempX, &tempY, &tempZ, &result);
-		 vectorCount += 1;
-		 }// else
-          }else printf("max amount of vectors reached");// if vectorCount < MAXVECTORS
+		 //vectorCount += 1;
+		 }// (else)
+          }else printf("\nmax amount of vectors reached\n");// if vectorCount < MAXVECTORS
 	}// if option = 1
 
+	if(option == 2){
+
+		printf("");
+
+	}// if option = 2
+
+
+	if(option == 3){
+
+		printVectors(vector, &vectorCount);
+
+	}// if option = 3
 
 }// main while loop
 

@@ -2,6 +2,8 @@
 #include <stdlib.h>
 
 #include "vector.h"
+#include "int.h"
+#include "float.h"
 
 vectors* createVector(itype* TYPE, void* x, void* y, void* z, errors* result){
 
@@ -37,9 +39,45 @@ errors vectorAdd(const vectors* v1, const vectors* v2, vectors* result){
 
 errors vectorDotProduct(const vectors* v1, const vectors* v2, void* result);
 
-errors vectorDelete(vectors* v1);
+errors freeVector(vectors* vector){
 
-errors freeVector(vectors* v1);
+	free(vector->x);
+    	free(vector->y);
+    	free(vector->z);
+    	free(vector);
+	return success;
+
+}
+
+errors vectorDelete(vectors* v1){
+
+	freeVector(v1);
+	
+
+}
+
+
+errors printVectors(vectors* v1[], const int* vectorCount){
+
+
+	if(*vectorCount < 0){
+		printf("\nno available vectors\n\n");
+		return failedToPrint;
+	}
+	for(int i = 0; i <= *vectorCount; i++) {
+   	char* x_str = v1[i]->type->print(v1[i]->x);
+    	char* y_str = v1[i]->type->print(v1[i]->y);
+    	char* z_str = v1[i]->type->print(v1[i]->z);
+
+    	if(v1[i]->type == getIntType()) {
+        	printf("%d-int vector (%s, %s, %s)\n", i+1, x_str, y_str, z_str);
+    	} else {
+        	printf("%d-float vector (%s, %s, %s)\n", i+1, x_str, y_str, z_str);
+    	  }
+
+	}return success;
+
+}
 
 /*int checkType(const void* x, const void* y, const void* z){
 

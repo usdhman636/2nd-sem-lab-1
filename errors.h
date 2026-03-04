@@ -7,6 +7,7 @@
 typedef enum {
 	memoAlocFailed = 100,
 	differentTypes = 200,
+	failedToPrint = 300,
 	success = 0,
 
 }errors;

@@ -24,6 +24,8 @@ errors vectorDelete(vectors* v1);
 
 errors freeVector(vectors* v1);
 
+errors printVectors(vectors* v1[], const int* vectorCount);
+
 //int checkType(const void* x, const void* y, const void* z);
 
 #endif

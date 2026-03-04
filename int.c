@@ -13,9 +13,12 @@ int intDotProduct(const void* arg1, const void* arg2, void* result){
 	*(int*)result = *(int*)arg1 * *(int*)arg2;
         return 0;
 }
-char intPrint(const void* result){
+char* intPrint(const void* result){
 
-	return *(int*)result;
+	static char buffer[32];  // Static buffer to hold the string
+    	sprintf(buffer, "%d", *(int*)result);
+    	return buffer;
+
 }
 
 itype* getIntType(){
