@@ -36,14 +36,35 @@ vectors* createVector(itype* TYPE, float x, float y, float z, errors* result){
 	return vector;
 }
 
-errors vectorAdd(const vectors* v1, const vectors* v2, vectors* result){
+vectors* vectorAdd(const vectors* v1[], int *vectorCount, errors* result, const int* add1, const int* add2){
 
-	if(v1->type != v2->type) return differentTypes;
-	v1->type->add(v1->x, v2->x, result->x);
-        v1->type->add(v1->y, v2->y, result->y);
-        v1->type->add(v1->z, v2->z, result->z);
+	vectors* vecRes = malloc(sizeof(vectors));
+	if(v1[*add1]->type != v1[*add2]->type){
+	*vectorCount -= 1;
+	*result = differentTypes;
+	 return NULL;
+	}
+	if(v1[*add1]->type == getIntType()){
 
-        return success;
+		//vectors* vecRes = malloc(sizeof(vectors));
+		vecRes->type = getIntType();
+		vecRes->x = malloc(vecRes->type->size);
+		vecRes->y = malloc(vecRes->type->size);
+		vecRes->z = malloc(vecRes->type->size);
+
+	}else {
+
+		//vectors* vecRes = malloc(sizeof(vectors));
+		vecRes->type = getFloatType();
+		vecRes->x = malloc(vecRes->type->size);
+                vecRes->y = malloc(vecRes->type->size);
+                vecRes->z = malloc(vecRes->type->size);
+	}
+	v1[*add1]->type->add(v1[*add1]->x, v1[*add2]->x, vecRes->x);
+        v1[*add1]->type->add(v1[*add1]->y, v1[*add2]->y, vecRes->y);
+        v1[*add1]->type->add(v1[*add1]->z, v1[*add2]->z, vecRes->z);
+
+        return vecRes;
 }
 
 errors vectorDotProduct(const vectors* v1, const vectors* v2, void* result);

@@ -13,11 +13,13 @@ int main()
 {
 
 int option = 0, deleteOpt = 0;
+int add1 = 0, add2 = 0;
 vectors *vector[MAXVECTORS];
 char x[10], y[10], z[10];
 float tempX = 0, tempY = 0, tempZ = 0;
 int vectorCount = -1;
 errors result = success;
+//vectors* vecRes = createVector(getFloatType(), tempX, tempX, tempX, &result);
 
 printf("welcome to my vectors program\nchoose an option\n");
 while(1){
@@ -87,6 +89,40 @@ while(1){
 		printVectors(vector, &vectorCount);
 
 	}// if option = 3
+
+	if(option == 4){
+
+		while(1){
+                if(vectorCount < 0){
+                        printVectors(vector, &vectorCount);
+                        break;
+                }
+		printVectors(vector, &vectorCount);
+		printf("\nchoose 2 vectors to add together");
+		while(1){
+
+		printf("\nfirst vector:");
+		if(!scanf("%d", &add1) || add1 > vectorCount + 1 || add1 < 1){
+			clear_input_buffer();
+			printf("\ninvalid input, try again");
+			continue;
+		}else clear_input_buffer(); break;
+		}//inner while
+
+		while(1){
+		printf("\nsecond vector:");
+		if(!scanf("%d", &add2) || add2 > vectorCount + 1 || add2 < 1){
+
+		clear_input_buffer();
+		printf("\ninvalid input, try again");
+		continue;
+		}else clear_input_buffer(); break;
+		}//inner while
+		vectorCount += 1;
+		vector[vectorCount] = vectorAdd(vector, &vectorCount, &result, &add1, &add2);
+		if(result == differentTypes) printf("\ncan't add vectors of different types\n");
+		}//while
+	}// if option = 4
 
 }// main while loop
 

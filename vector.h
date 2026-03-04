@@ -16,7 +16,7 @@ typedef struct{
 
 vectors* createVector(itype* type, float x, float y, float z, errors* result);
 
-errors vectorAdd(const vectors* v1, const vectors* v2, vectors* result);
+vectors* vectorAdd(const vectors* v1[], int* vectorCount, errors* result, const int* add1, const int* add2);
 
 errors vectorDotProduct(const vectors* v1, const vectors* v2, void* result);
 
