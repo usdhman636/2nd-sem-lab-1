@@ -24,7 +24,7 @@ errors result = success;
 printf("welcome to my vectors program\nchoose an option\n");
 while(1){
 
-	printf("1-creat a vector");
+	printf("\n1-creat a vector");
 	printf("\n2-delete a vector");
 	printf("\n3-show vector lists");
 	printf("\n4-add vectors together");
@@ -58,6 +58,7 @@ while(1){
 		vector[vectorCount] = createVector(getIntType(), tempX, tempY, tempZ, &result);
 		}else{
 		 vector[vectorCount] = createVector(getFloatType(), tempX, tempY, tempZ, &result);
+		 printf("\nvector successfuly created!\n");
 		 }// (else)
           }else printf("\nmax amount of vectors reached\n");// if vectorCount < MAXVECTORS
 	}// if option = 1
@@ -79,6 +80,7 @@ while(1){
 			}else clear_input_buffer(); break;
 		}
 		vectorDelete(vector, &vectorCount, &deleteOpt);
+		printf("\nvector successfuly deleted!\n");
 		break;
 	    }//while
 	}// if option = 2
@@ -87,7 +89,6 @@ while(1){
 	if(option == 3){
 
 		printVectors(vector, &vectorCount);
-
 	}// if option = 3
 
 	if(option == 4){
@@ -123,17 +124,16 @@ while(1){
 			 clear_input_buffer();
 			 break;}
 		}//inner while
-		//}//big while
 
-		/*if(checkType(vector, &add1, &add2) == -1){
+		if(checkType(vector, add1, add2) == -1){
 			printf("\nincompatible types\n");
 			break;
-		}*/
-		printf("test");
+		}
 		vectorCount += 1;
 		add1 -= 1;
 		add2 -= 1;
 		vector[vectorCount] = vectorAdd(vector, &add1, &add2);
+		printf("\nvectors successfuly summed!\n");
 		break;
 		}//big while
 	}// if option = 4

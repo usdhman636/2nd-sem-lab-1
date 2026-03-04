@@ -26,6 +26,6 @@ errors freeVector(vectors* v1);
 
 errors printVectors(vectors* v1[], const int* vectorCount);
 
-int checkType(vectors* v1[], int* add1, int* add2);
+int checkType(vectors* v1[], int add1, int add2);
 
 #endif

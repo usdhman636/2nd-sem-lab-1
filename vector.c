@@ -118,7 +118,7 @@ errors vectorDelete(vectors* v1[], int* vectorCount, const int* deleteOpt){
 
 errors printVectors(vectors* v1[], const int* vectorCount){
 
-
+	printf("\n");
 	if(*vectorCount < 0){
 		printf("\nno available vectors\n\n");
 		return failedToPrint;
@@ -137,15 +137,19 @@ errors printVectors(vectors* v1[], const int* vectorCount){
     	      x_str = v1[i]->type->print(v1[i]->z);
 	printf(", %s)\n",x_str);
 
-	}return success;
+	}
+	printf("\n");
+	return success;
 
 }
 
-int checkType(vectors* v1[], int* add1, int* add2){
-	printf("haha");
-	if(v1[*add1]->type->value != v1[*add2]->type->value){
+int checkType(vectors* v1[], int add1, int add2){
+
+	add1 -= 1;
+	add2 -= 1;
+	if(v1[add1]->type->value != v1[add2]->type->value){
 		return -1; // different types
-	}else if(v1[*add1]->type->value == 0){
+	}else if(v1[add1]->type->value == 0){
 		 return 0; // int type
 	}else return 1; // float type
 }
