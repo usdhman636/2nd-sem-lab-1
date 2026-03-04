@@ -5,7 +5,7 @@
 #include "int.h"
 #include "float.h"
 
-vectors* createVector(itype* TYPE, void* x, void* y, void* z, errors* result){
+vectors* createVector(itype* TYPE, float x, float y, float z, errors* result){
 
 	vectors* vector = malloc(sizeof(vectors));
         if (vector == NULL) {
@@ -20,9 +20,18 @@ vectors* createVector(itype* TYPE, void* x, void* y, void* z, errors* result){
 		*result = memoAlocFailed;
 		exit(1);
 	}
-	memcpy(vector->x, x, TYPE->size);
-	memcpy(vector->y, y, TYPE->size);
-	memcpy(vector->z, z, TYPE->size);
+	if (TYPE == getIntType()) {
+        	int ix = (int) x;
+	        int iy = (int) y;
+	        int iz = (int) z;
+	        memcpy(vector->x, &ix, TYPE->size);
+	        memcpy(vector->y, &iy, TYPE->size);
+	        memcpy(vector->z, &iz, TYPE->size);
+        }else {
+	        memcpy(vector->x, &x, TYPE->size);
+	        memcpy(vector->y, &y, TYPE->size);
+	        memcpy(vector->z, &z, TYPE->size);
+    }
 	*result = success;
 	return vector;
 }
@@ -66,14 +75,17 @@ errors printVectors(vectors* v1[], const int* vectorCount){
 	}
 	for(int i = 0; i <= *vectorCount; i++) {
    	char* x_str = v1[i]->type->print(v1[i]->x);
-    	char* y_str = v1[i]->type->print(v1[i]->y);
-    	char* z_str = v1[i]->type->print(v1[i]->z);
+	if(v1[i]->type == getIntType()) {
+                printf("%d-int vector (%s", i+1, x_str);
+        } else {
+                printf("%d-float vector (%s", i+1, x_str);
+          }
 
-    	if(v1[i]->type == getIntType()) {
-        	printf("%d-int vector (%s, %s, %s)\n", i+1, x_str, y_str, z_str);
-    	} else {
-        	printf("%d-float vector (%s, %s, %s)\n", i+1, x_str, y_str, z_str);
-    	  }
+    	      x_str = v1[i]->type->print(v1[i]->y);
+	printf(", %s",x_str);
+
+    	      x_str = v1[i]->type->print(v1[i]->z);
+	printf(", %s)\n",x_str);
 
 	}return success;
 

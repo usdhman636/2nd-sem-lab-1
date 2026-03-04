@@ -12,7 +12,7 @@
 int main()
 {
 
-int option = 0;
+int option = 0, deleteOpt = 0;
 vectors *vector[MAXVECTORS];
 char x[10], y[10], z[10];
 float tempX = 0, tempY = 0, tempZ = 0;
@@ -53,19 +53,30 @@ while(1){
 	  if(vectorCount < MAXVECTORS - 1){
 		vectorCount += 1;
 		if(createVectorScan(x, y, z, &tempX, &tempY, &tempZ) == 0){
-		vector[vectorCount] = createVector(getIntType(), &tempX, &tempY, &tempZ, &result);
-		//vectorCount += 1;
+		vector[vectorCount] = createVector(getIntType(), tempX, tempY, tempZ, &result);
 		}else{
-		 vector[vectorCount] = createVector(getFloatType(), &tempX, &tempY, &tempZ, &result);
-		 //vectorCount += 1;
+		 vector[vectorCount] = createVector(getFloatType(), tempX, tempY, tempZ, &result);
 		 }// (else)
           }else printf("\nmax amount of vectors reached\n");// if vectorCount < MAXVECTORS
 	}// if option = 1
 
 	if(option == 2){
 
-		printf("");
-
+	    while(1){
+		if(vectorCount < 0){
+			printVectors(vector, &vectorCount);
+			break;
+		}
+		printVectors(vector, &vectorCount);
+		printf("which vector do you want to delete:");
+		while(1){
+			if(!scanf("%d", &deleteOpt) || deleteOpt > vectorCount + 1 || deleteOpt < 1){
+				printf("invalid input, try again:");
+				clear_input_buffer();
+				continue;
+			}else clear_input_buffer(); break;
+		}
+	    }//while
 	}// if option = 2
 
 

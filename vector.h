@@ -14,7 +14,7 @@ typedef struct{
 	itype* type;
 }vectors;
 
-vectors* createVector(itype* type, void* x, void* y, void* z, errors* result);
+vectors* createVector(itype* type, float x, float y, float z, errors* result);
 
 errors vectorAdd(const vectors* v1, const vectors* v2, vectors* result);
 
