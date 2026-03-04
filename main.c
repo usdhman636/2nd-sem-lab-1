@@ -76,6 +76,8 @@ while(1){
 				continue;
 			}else clear_input_buffer(); break;
 		}
+		vectorDelete(vector, &vectorCount, &deleteOpt);
+		break;
 	    }//while
 	}// if option = 2
 

@@ -20,7 +20,7 @@ errors vectorAdd(const vectors* v1, const vectors* v2, vectors* result);
 
 errors vectorDotProduct(const vectors* v1, const vectors* v2, void* result);
 
-errors vectorDelete(vectors* v1);
+errors vectorDelete(vectors* v1[], int* vectorCount, const int* deleteOpt);
 
 errors freeVector(vectors* v1);
 

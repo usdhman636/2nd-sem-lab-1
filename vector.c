@@ -58,10 +58,43 @@ errors freeVector(vectors* vector){
 
 }
 
-errors vectorDelete(vectors* v1){
+errors vectorDelete(vectors* v1[], int* vectorCount, const int* deleteOpt){
 
-	freeVector(v1);
-	
+
+	if(*deleteOpt - 1 == *vectorCount){
+                        freeVector(v1[*vectorCount]);
+                        printf("\nvector deleted\n\n");
+			*vectorCount -= 1;
+                        return success;
+        }
+	for(int i = *deleteOpt - 1; i < *vectorCount; i++){
+		freeVector(v1[i]);
+		v1[i] = malloc(sizeof(vectors));
+     		if (v1[i] == NULL) {
+                	return memoAlocFailed;
+    		}
+		if(v1[i + 1]->type == getIntType()){
+
+			v1[i]->type = getIntType();
+			v1[i]->x = malloc(v1[i]->type->size);
+			v1[i]->y = malloc(v1[i]->type->size);
+			v1[i]->z = malloc(v1[i]->type->size);
+		}else {
+			v1[i]->type = getFloatType();
+			v1[i]->x = malloc(v1[i]->type->size);
+                        v1[i]->y = malloc(v1[i]->type->size);
+                        v1[i]->z = malloc(v1[i]->type->size);
+		}
+		if (v1[i]->x == NULL || v1[i]->y == NULL || v1[i]->z == NULL){
+                return  memoAlocFailed;
+        	}
+		memcpy(v1[i]->x, v1[i + 1]->x, v1[i]->type->size);
+		memcpy(v1[i]->y, v1[i + 1]->y, v1[i]->type->size);
+		memcpy(v1[i]->z, v1[i + 1]->z, v1[i]->type->size);
+	}// for
+	printf("\n vector deleted\n\n");
+	*vectorCount -= 1;
+	return success;
 
 }
 
