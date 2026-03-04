@@ -14,16 +14,16 @@ typedef struct{
 	itype* type;
 }vectors;
 
-vector* creatVector(itype* type, void* x, void* y, void* z, errors* result);
+vectors* createVector(itype* type, void* x, void* y, void* z, errors* result);
 
-errors vectorAdd(const vector* v1, const vector* v2, vector* result);
+errors vectorAdd(const vectors* v1, const vectors* v2, vectors* result);
 
-errors vectorDotProduct(const vector* v1, const vector* v2, void* result);
+errors vectorDotProduct(const vectors* v1, const vectors* v2, void* result);
 
-errors vectorDelete(vector* v1);
+errors vectorDelete(vectors* v1);
 
-errors freeVector(vector* v1);
+errors freeVector(vectors* v1);
 
-int checkType(const float* x, const float* y, const float* z);
+//int checkType(const void* x, const void* y, const void* z);
 
 #endif

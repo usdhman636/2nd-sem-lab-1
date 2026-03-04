@@ -4,20 +4,22 @@
 #include "vector.h"
 #include "errors.h"
 #include "itype.h"
+#include "io.h"
 
-#define MAXOPTIONS = 6
-#define MAXVECTORS = 50
+#define MAXOPTIONS  6
+#define MAXVECTORS  50
 
 int main()
 {
 
 int option = 0;
-vectors vector[MAXVECTORS];
+vectors *vector[MAXVECTORS];
+char x[10], y[10], z[10];
 float tempX = 0, tempY = 0, tempZ = 0;
 int vectorCount = 0;
-errors result = ok;
+errors result = success;
 
-printf("welcome to my vectors programe\nchoose an option\n");
+printf("welcome to my vectors program\nchoose an option\n");
 while(1){
 
 	printf("1-creat a vector");
@@ -43,49 +45,18 @@ while(1){
 	}
 
 	if(option == MAXOPTIONS){
-		printf("\ngoodbye");
+		printf("\ngoodbye\n");
 		return 0;
 	}
 
 	if(option == 1){
 	  if(vectorCount < MAXVECTORS){
-		printf("\nenter x value:");
-		while(1){
-			if(!scanf("%f",&tempX)){
-                	clear_input_buffer();
-                	printf("\ninvalid input, try again:");
-                	continue;
-                	}
-        		clear_input_buffer();
-        		break;
-		}
-		printf("\nenter y value:");
-                while(1){
-                        if(!scanf("%f",&tempZ)){
-                        clear_input_buffer();
-                        printf("\ninvalid input, try ag>
-                        continue;
-                        }
-                        clear_input_buffer();
-                        break;
-                }
-		printf("\nenter z value:");
-                while(1){
-                        if(!scanf("%f",&tempZ)){
-                        clear_input_buffer();
-                        printf("\ninvalid input, try ag>
-                        continue;
-                        }
-                        clear_input_buffer();
-                        break;
-                }
-		if(checkType(&tempX, &tempY, &tempZ) == 0){
-		vector[vectorCount] = creatVector(getIntType(), &tempX, &tempY, &tempZ, &result);
+		if(createVectorScan(x, y, z, &tempX, &tempY, &tempZ) == 0){
+		vector[vectorCount] = createVector(getIntType(), &tempX, &tempY, &tempZ, &result);
 		vectorCount += 1;
-
 		}else{
-		 vector[vectorCount] = creatVector(getFloatType(), &tempX, &tempY, &tempZ, &result);
-		 vectorCount += 1; 
+		 vector[vectorCount] = createVector(getFloatType(), &tempX, &tempY, &tempZ, &result);
+		 vectorCount += 1;
 		 }// else
           }else printf("max amount of vectors reached");// if vectorCount < MAXVECTORS
 	}// if option = 1

@@ -6,15 +6,11 @@
 
 typedef enum {
 	memoAlocFailed = 100,
-	differenTypes = 200,
+	differentTypes = 200,
 	success = 0,
 
 }errors;
 
-int clear_input_buffer() {
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF);
-    return 0;
-}
+int clear_input_buffer();
 
 #endif
