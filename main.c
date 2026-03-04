@@ -94,6 +94,11 @@ while(1){
 	if(option == 4){
 
 		while(1){
+
+		if(vectorCount == MAXVECTORS - 1){
+			printf("\nmax amount of vectors reached\n");
+			break;
+		}
                 if(vectorCount < 0){
                         printVectors(vector, &vectorCount);
                         break;
