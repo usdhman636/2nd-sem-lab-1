@@ -125,11 +125,14 @@ while(1){
 		}//inner while
 		//}//big while
 
-		if(checkType(vector, &add1, &add2) == -1){
+		/*if(checkType(vector, &add1, &add2) == -1){
 			printf("\nincompatible types\n");
 			break;
-		}
+		}*/
+		printf("test");
 		vectorCount += 1;
+		add1 -= 1;
+		add2 -= 1;
 		vector[vectorCount] = vectorAdd(vector, &add1, &add2);
 		break;
 		}//big while
