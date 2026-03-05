@@ -14,6 +14,8 @@ int main()
 
 int option = 0, deleteOpt = 0;
 int add1 = 0, add2 = 0;
+int iDotProd;
+float fDotProd;
 vectors *vector[MAXVECTORS];
 char x[10], y[10], z[10];
 float tempX = 0, tempY = 0, tempZ = 0;
@@ -143,6 +145,62 @@ while(1){
 		}//big while
 	}// if option = 4
 
+	if(option == 5){
+
+	     while(1){
+		if(vectorCount < 0){
+                        printVectors(vector, &vectorCount);
+                        break;
+                }
+                printVectors(vector, &vectorCount);
+                printf("\nchoose 2 vectors to add together");
+                while(1){
+
+                printf("\nfirst vector:");
+                if(!scanf("%d", &add1) || add1 > vectorCount + 1 || add1 < 1){
+                        clear_input_buffer();
+                        printf("\ninvalid input, try again");
+                        continue;
+                }else{
+                         clear_input_buffer();
+                         break;
+                }
+                }//inner while
+
+                while(1){
+                printf("\nsecond vector:");
+                if(!scanf("%d", &add2) || add2 > vectorCount + 1 || add2 < 1){
+
+                clear_input_buffer();
+                printf("\ninvalid input, try again");
+                continue;
+                }else{
+                         clear_input_buffer();
+                         break;}
+                }//inner while
+
+                if(checkType(vector, add1, add2) == -1){
+                        printf("\nincompatible types\n");
+                        break;
+                }
+                add1 -= 1;
+                add2 -= 1;
+                if(vectorDotProduct(vector, &add1, &add2, &iDotProd, &fDotProd) == 0){
+
+			printOneVector(vector, &add1);
+			printf(" • ");
+			printOneVector(vector, &add2);
+			printf(" = %d\n", iDotProd);
+		}else {
+
+			printOneVector(vector, &add1);
+                        printf(" • ");
+                        printOneVector(vector, &add2);
+                        printf(" = %.4f\n", fDotProd);
+		}
+                break;
+                }//big while
+	}
 }// main while loop
 
 return 0;

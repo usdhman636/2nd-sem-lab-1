@@ -63,7 +63,40 @@ vectors* vectorAdd(vectors* v1[], const int* add1, const int* add2){
         return vecRes;
 }
 
-errors vectorDotProduct(const vectors* v1, const vectors* v2, void* result);
+int vectorDotProduct(const vectors* v1[], int* arg1, int* arg2, int* iDotProd, float* fDotProd){
+
+	vectors* vecRes = malloc(sizeof(vectors));
+
+        if(v1[*arg1]->type->value == 0){
+
+                vecRes->type = getIntType();
+                vecRes->x = malloc(vecRes->type->size);
+                vecRes->y = malloc(vecRes->type->size);
+                vecRes->z = malloc(vecRes->type->size);
+
+		v1[*arg1]->type->dotProduct(v1[*arg1]->x, v1[*arg2]->x, vecRes->x);
+        	v1[*arg1]->type->dotProduct(v1[*arg1]->y, v1[*arg2]->y, vecRes->y);
+        	v1[*arg1]->type->dotProduct(v1[*arg1]->z, v1[*arg2]->z, vecRes->z);
+
+		*iDotProd = *(int*)vecRes->x + *(int*)vecRes->y + *(int*)vecRes->z;
+		return 0;
+
+        }else {
+
+                vecRes->type = getFloatType();
+                vecRes->x = malloc(vecRes->type->size);
+                vecRes->y = malloc(vecRes->type->size);
+                vecRes->z = malloc(vecRes->type->size);
+
+		v1[*arg1]->type->dotProduct(v1[*arg1]->x, v1[*arg2]->x, vecRes->x);
+                v1[*arg1]->type->dotProduct(v1[*arg1]->y, v1[*arg2]->y, vecRes->y);
+                v1[*arg1]->type->dotProduct(v1[*arg1]->z, v1[*arg2]->z, vecRes->z);
+
+		*fDotProd = *(float*)vecRes->x + *(float*)vecRes->y + *(float*)vecRes->z;
+                return 1;
+
+        }
+}
 
 errors freeVector(vectors* vector){
 
@@ -124,22 +157,37 @@ errors printVectors(vectors* v1[], const int* vectorCount){
 		return failedToPrint;
 	}
 	for(int i = 0; i <= *vectorCount; i++) {
-   	char* x_str = v1[i]->type->print(v1[i]->x);
+   	char* str = v1[i]->type->print(v1[i]->x);
 	if(v1[i]->type == getIntType()) {
-                printf("%d-int vector (%s", i+1, x_str);
+                printf("%d-int vector (%s", i+1, str);
         } else {
-                printf("%d-float vector (%s", i+1, x_str);
+                printf("%d-float vector (%s", i+1, str);
           }
 
-    	      x_str = v1[i]->type->print(v1[i]->y);
-	printf(", %s",x_str);
+    	      str = v1[i]->type->print(v1[i]->y);
+	printf(", %s",str);
 
-    	      x_str = v1[i]->type->print(v1[i]->z);
-	printf(", %s)\n",x_str);
+    	      str = v1[i]->type->print(v1[i]->z);
+	printf(", %s)\n",str);
 
 	}
 	printf("\n");
 	return success;
+
+}
+
+errors printOneVector(vectors* v1[], const int* arg){
+
+	char* str = v1[*arg]->type->print(v1[*arg]->x);
+                printf("(%s", str);
+
+              str = v1[*arg]->type->print(v1[*arg]->y);
+		printf(", %s",str);
+
+              str = v1[*arg]->type->print(v1[*arg]->z);
+        	printf(", %s)",str);
+
+        return success;
 
 }
 
