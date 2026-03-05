@@ -6,6 +6,7 @@
 int floatAdd(const void* arg1, const void* arg2, void* result);
 int floatDotProduct(const void* arg1, const void* arg2, void* result);
 char* floatPrint(const void* result);
+int freeFLOAT();
 
 itype* getFloatType();
 

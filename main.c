@@ -16,7 +16,8 @@ int option = 0, deleteOpt = 0;
 int add1 = 0, add2 = 0;
 int iDotProd;
 float fDotProd;
-vectors *vector[MAXVECTORS];
+int arrCount = 10; //for malloc
+vectors **vector = initiateVecArr();
 char x[10], y[10], z[10];
 float tempX = 0, tempY = 0, tempZ = 0;
 int vectorCount = -1;
@@ -49,12 +50,18 @@ while(1){
 	}
 
 	if(option == MAXOPTIONS){
+		endProgram(vector, &vectorCount);
 		printf("\ngoodbye\n");
 		return 0;
 	}
 
 	if(option == 1){
 	  if(vectorCount < MAXVECTORS - 1){
+		if((arrCount - vectorCount) == 1){
+
+			vector = reallocVec(vector, &arrCount);
+
+		}
 		vectorCount += 1;
 		if(createVectorScan(x, y, z, &tempX, &tempY, &tempZ) == 0){
 		vector[vectorCount] = createVector(getIntType(), tempX, tempY, tempZ, &result);
@@ -104,6 +111,11 @@ while(1){
                 if(vectorCount < 0){
                         printVectors(vector, &vectorCount);
                         break;
+                }
+		if((arrCount - vectorCount) == 1){
+
+                        vector = reallocVec(vector, &arrCount);
+
                 }
 		printVectors(vector, &vectorCount);
 		printf("\nchoose 2 vectors to add together");

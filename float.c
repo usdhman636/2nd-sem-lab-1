@@ -33,3 +33,10 @@ itype* getFloatType(){
         }
    return FLOAT_INPUT_TYPE;
 }
+
+int freeFLOAT(){
+
+	free(FLOAT_INPUT_TYPE);
+	return 0;
+
+}

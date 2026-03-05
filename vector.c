@@ -5,6 +5,25 @@
 #include "int.h"
 #include "float.h"
 
+vectors** initiateVecArr(){
+
+	vectors** vecArr = malloc(10 * sizeof(vectors*));
+
+	if(vecArr == NULL) exit(1);
+
+	return vecArr;
+
+}
+
+vectors** reallocVec(vectors** v1, int* arrCount){
+
+	*arrCount += 10;
+	vectors** tmpVec = realloc(v1,*arrCount * sizeof(vectors*));
+	if(tmpVec == NULL) exit(1);
+	return tmpVec;
+
+}
+
 vectors* createVector(itype* TYPE, float x, float y, float z, errors* result){
 
 	vectors* vector = malloc(sizeof(vectors));
@@ -63,7 +82,7 @@ vectors* vectorAdd(vectors* v1[], const int* add1, const int* add2){
         return vecRes;
 }
 
-int vectorDotProduct(const vectors* v1[], int* arg1, int* arg2, int* iDotProd, float* fDotProd){
+int vectorDotProduct(vectors* v1[], int* arg1, int* arg2, int* iDotProd, float* fDotProd){
 
 	vectors* vecRes = malloc(sizeof(vectors));
 
@@ -200,4 +219,26 @@ int checkType(vectors* v1[], int add1, int add2){
 	}else if(v1[add1]->type->value == 0){
 		 return 0; // int type
 	}else return 1; // float type
+}
+
+errors endProgram(vectors** v1, const int* vectorCount){
+
+	if(*vectorCount < 0){
+                free(v1);
+		freeINT();
+		freeFLOAT();
+                return success;
+        }else{
+
+		for(int i = 0; i <= *vectorCount; i++){
+
+			freeVector(v1[i]);
+
+		}
+		free(v1);
+		freeINT();
+                freeFLOAT();
+	}//else
+
+	return success;
 }

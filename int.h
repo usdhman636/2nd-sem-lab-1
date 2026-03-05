@@ -6,6 +6,7 @@
 int intAdd(const void* arg1, const void* arg2, void* result);
 int intDotProduct(const void* arg1, const void* arg2, void* result);
 char* intPrint(const void* result);
+int freeINT();
 
 itype* getIntType();
 

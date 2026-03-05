@@ -34,3 +34,10 @@ itype* getIntType(){
 	}
    return INT_INPUT_TYPE;
 }
+
+int freeINT(){
+
+	free(INT_INPUT_TYPE);
+	return 0;
+
+}
