@@ -16,7 +16,7 @@ int floatDotProduct(const void* arg1, const void* arg2, void* result){
 char* floatPrint(const void* result){
 
         static char buffer2[32];  // Static buffer to hold the string
-        sprintf(buffer2, "%.4f", *(float*)result);
+        sprintf(buffer2, "%.3f", *(float*)result);
         return buffer2;
 }
 

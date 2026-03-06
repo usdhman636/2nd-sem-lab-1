@@ -6,7 +6,7 @@
 #include "itype.h"
 #include "io.h"
 
-#define MAXOPTIONS  6
+#define MAXOPTIONS  7
 #define MAXVECTORS  50
 
 int main()
@@ -22,6 +22,7 @@ char x[10], y[10], z[10];
 float tempX = 0, tempY = 0, tempZ = 0;
 int vectorCount = -1;
 errors result = success;
+int testTrigger = 1;
 
 
 while(1){
@@ -34,7 +35,8 @@ while(1){
 	printf("\n║ 3.   Show vector list      ║");
 	printf("\n║ 4.   Add vectors together  ║");
 	printf("\n║ 5.   Find dot product      ║");
-	printf("\n║ 6.   Exit                  ║");
+	printf("\n║ 6.   Test program          ║");
+	printf("\n║ 7.   Exit                  ║");
 	printf("\n╚════════════════════════════╝");
 	printf("\nYour choice: ");
 
@@ -49,13 +51,13 @@ while(1){
 		printf("\ninvalid option, try again:");
 		continue;
 		}
+	if(option != 6){testTrigger = -1;}
 	clear_input_buffer();
 	break;
 	}
 
 	if(option == MAXOPTIONS){
 		endProgram(vector, &vectorCount);
-		delay(200);
 		CLEAR_SCREEN();
 		printf("\n╔════════════════════════════╗");
 	        printf("\n║     THANK YOU FOR USING    ║");
@@ -142,7 +144,6 @@ while(1){
                         vector = reallocVec(vector, &arrCount);
 
                 }
-		delay(200);
 		CLEAR_SCREEN();
 		printVectors(vector, &vectorCount);
 		printf("choose 2 vectors to add together\n");
@@ -181,6 +182,8 @@ while(1){
 		add2 -= 1;
 		vector[vectorCount] = vectorAdd(vector, &add1, &add2);
 		printf("\nvectors successfully summed!\n");
+		printOneVector(vector, &vectorCount);
+		printf("\n");
 		waitForEnter();
 		break;
 		}//big while
@@ -194,7 +197,6 @@ while(1){
                         waitForEnter();
 			break;
                 }
-		delay(200);
 		CLEAR_SCREEN();
                 printVectors(vector, &vectorCount);
                 printf("choose 2 vectors to find their dot product");
@@ -242,11 +244,92 @@ while(1){
 			printOneVector(vector, &add1);
                         printf(" • ");
                         printOneVector(vector, &add2);
-                        printf(" = %.4f\n", fDotProd);
+                        printf(" = %.3f\n", fDotProd);
 			waitForEnter();
 		}
                 break;
                 }//big while
+	}
+
+	if(option == 6){
+		if(testTrigger == 1){
+			CLEAR_SCREEN();
+			printf("\ncreating vectors...\n");
+			delay(1500);
+			vectorCount +=1;
+			vector[0] = createVector(getIntType(), 5, 3, 7, &result);
+			printf("\n1st vector successfully created!\n");
+			printOneVector(vector, &(int){0}); printf("\n");
+			delay(1500);
+			vectorCount +=1;
+			vector[1] = createVector(getFloatType(), 9.35, 1.18, 6, &result);
+			printf("\n2nd vector successfully created!\n");
+			printOneVector(vector, &(int){1}); printf("\n");
+			vectorCount +=1;
+			vector[2] = createVector(getIntType(), 12, 4, 8, &result);
+			delay(1500);
+			printf("\n3rd vector successfully created!\n");
+			printOneVector(vector, &(int){2}); printf("\n");
+			delay(1500);
+			printVectors(vector, &vectorCount);
+
+			delay(2000);
+			printf("\nadding vector 1 and 2\n");
+			delay(1500);
+			if(checkType(vector, 1, 2) == -1){
+                        	printf("\nincompatible types\n");
+			}
+			delay(2000);
+			printf("\nadding vector 1 and 3\n");
+			vectorCount +=1;
+			delay(1500);
+			vector[vectorCount] = vectorAdd(vector,&(int){0}, &(int){2});
+                	printf("\nvectors successfully summed!\n");
+			delay(1500);
+			printVectors(vector, &vectorCount);
+			delay(3000);
+
+			printf("\nfinding dot product of vector 3 and 4\n");
+			fflush(stdout);
+			delay(1500);
+			vectorDotProduct(vector, &(int){2}, &(int){3}, &iDotProd, &fDotProd);
+                        printf("\n");
+                        printOneVector(vector, &(int){2});
+			fflush(stdout);
+			delay(1000);
+                        printf(" • ");
+			fflush(stdout);
+			delay(1000);
+                        printOneVector(vector, &(int){3});
+			fflush(stdout);
+			delay(1000);
+                        printf(" = %d\n", iDotProd);
+			delay(3000);
+
+			printf("\ndeleting vector 2...\n");
+			delay(2000);
+			vectorDelete(vector, &vectorCount, &(int){2});
+                	printf("\nvector successfully deleted!\n");
+			delay(2000);
+			printVectors(vector, &vectorCount);
+
+			//freeing vectors
+			vectorDelete(vector, &vectorCount, &(int){3});
+			vectorDelete(vector, &vectorCount, &(int){2});
+			vectorDelete(vector, &vectorCount, &(int){1});
+
+
+			testTrigger = -1;
+			waitForEnter();
+			continue;
+		}//testTrigger
+		else{
+
+			printf("\nTest program can only be run once\nand only at the start\n");
+			waitForEnter();
+			continue;
+
+		}
 	}
 }// main while loop
 
