@@ -7,7 +7,7 @@
 #include "io.h"
 
 #define MAXOPTIONS  6
-#define MAXVECTORS  50
+#define MAXVECTORS  2
 
 int main()
 {
@@ -79,11 +79,11 @@ while(1){
 		vectorCount += 1;
 		if(createVectorScan(x, y, z, &tempX, &tempY, &tempZ) == 0){
 		vector[vectorCount] = createVector(getIntType(), tempX, tempY, tempZ, &result);
-		printf("\nvector successfuly created!\n");
+		printf("\nvector successfully created!\n");
 		waitForEnter();
 		}else{
 		 vector[vectorCount] = createVector(getFloatType(), tempX, tempY, tempZ, &result);
-		 printf("\nvector successfuly created!\n");
+		 printf("\nvector successfully created!\n");
 		 waitForEnter();
 		 }// (else)
           }else{ printf("\nerror! max amount of vectors reached\n");// if vectorCount < MAXVECTORS
@@ -109,7 +109,7 @@ while(1){
 			}else clear_input_buffer(); break;
 		}
 		vectorDelete(vector, &vectorCount, &deleteOpt);
-		printf("\nvector successfuly deleted!\n");
+		printf("\nvector successfully deleted!\n");
 		waitForEnter();
 		break;
 	    }//while
@@ -151,7 +151,7 @@ while(1){
 		printf("\nfirst vector:");
 		if(!scanf("%d", &add1) || add1 > vectorCount + 1 || add1 < 1){
 			clear_input_buffer();
-			printf("\ninvalid input, try again");
+			printf("\ninvalid input, try again.\n");
 			continue;
 		}else{
 			 clear_input_buffer();
@@ -164,7 +164,7 @@ while(1){
 		if(!scanf("%d", &add2) || add2 > vectorCount + 1 || add2 < 1){
 
 		clear_input_buffer();
-		printf("\ninvalid input, try again");
+		printf("\ninvalid input, try again.\n");
 		continue;
 		}else{
 			 clear_input_buffer();
@@ -180,7 +180,7 @@ while(1){
 		add1 -= 1;
 		add2 -= 1;
 		vector[vectorCount] = vectorAdd(vector, &add1, &add2);
-		printf("\nvectors successfuly summed!\n");
+		printf("\nvectors successfully summed!\n");
 		waitForEnter();
 		break;
 		}//big while
@@ -203,7 +203,7 @@ while(1){
                 printf("\n\nfirst vector:");
                 if(!scanf("%d", &add1) || add1 > vectorCount + 1 || add1 < 1){
                         clear_input_buffer();
-                        printf("\n\ninvalid input, try again");
+                        printf("\ninvalid input, try again.");
                         continue;
                 }else{
                          clear_input_buffer();
@@ -216,7 +216,7 @@ while(1){
                 if(!scanf("%d", &add2) || add2 > vectorCount + 1 || add2 < 1){
 
                 clear_input_buffer();
-                printf("\n\ninvalid input, try again");
+                printf("\ninvalid input, try again.\n");
                 continue;
                 }else{
                          clear_input_buffer();
