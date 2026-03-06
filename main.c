@@ -7,7 +7,7 @@
 #include "io.h"
 
 #define MAXOPTIONS  6
-#define MAXVECTORS  2
+#define MAXVECTORS  50
 
 int main()
 {
