@@ -132,7 +132,6 @@ errors vectorDelete(vectors* v1[], int* vectorCount, const int* deleteOpt){
 
 	if(*deleteOpt - 1 == *vectorCount){
                         freeVector(v1[*vectorCount]);
-                        printf("\nvector deleted\n\n");
 			*vectorCount -= 1;
                         return success;
         }
@@ -161,7 +160,7 @@ errors vectorDelete(vectors* v1[], int* vectorCount, const int* deleteOpt){
 		memcpy(v1[i]->y, v1[i + 1]->y, v1[i]->type->size);
 		memcpy(v1[i]->z, v1[i + 1]->z, v1[i]->type->size);
 	}// for
-	printf("\n vector deleted\n\n");
+
 	*vectorCount -= 1;
 	return success;
 

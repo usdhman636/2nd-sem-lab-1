@@ -24,15 +24,19 @@ int vectorCount = -1;
 errors result = success;
 
 
-printf("welcome to my vectors program\nchoose an option\n");
 while(1){
-
-	printf("\n1-creat a vector");
-	printf("\n2-delete a vector");
-	printf("\n3-show vector lists");
-	printf("\n4-add vectors together");
-	printf("\n5-find dotproduct");
-	printf("\n6-exit\n:");
+	CLEAR_SCREEN();
+	printf("\n╔════════════════════════════╗");
+	printf("\n║     VECTOR PROGRAM MENU    ║");
+	printf("\n╠════════════════════════════╣");
+	printf("\n║ 1.   Create a vector       ║");
+	printf("\n║ 2.   Delete a vector       ║");
+	printf("\n║ 3.   Show vector list      ║");
+	printf("\n║ 4.   Add vectors together  ║");
+	printf("\n║ 5.   Find dot product      ║");
+	printf("\n║ 6.   Exit                  ║");
+	printf("\n╚════════════════════════════╝");
+	printf("\nYour choice: ");
 
 	while(1){
 		if(!scanf("%d",&option)){
@@ -51,7 +55,17 @@ while(1){
 
 	if(option == MAXOPTIONS){
 		endProgram(vector, &vectorCount);
-		printf("\ngoodbye\n");
+		delay(200);
+		CLEAR_SCREEN();
+		printf("\n╔════════════════════════════╗");
+	        printf("\n║     THANK YOU FOR USING    ║");
+   	        printf("\n║       VECTOR PROGRAM       ║");
+	        printf("\n╠════════════════════════════╣");
+	        printf("\n║                            ║");
+	        printf("\n║         GOODBYE!           ║");
+	        printf("\n║                            ║");
+	        printf("\n╚════════════════════════════╝\n");
+
 		return 0;
 	}
 
@@ -65,11 +79,16 @@ while(1){
 		vectorCount += 1;
 		if(createVectorScan(x, y, z, &tempX, &tempY, &tempZ) == 0){
 		vector[vectorCount] = createVector(getIntType(), tempX, tempY, tempZ, &result);
+		printf("\nvector successfuly created!\n");
+		waitForEnter();
 		}else{
 		 vector[vectorCount] = createVector(getFloatType(), tempX, tempY, tempZ, &result);
 		 printf("\nvector successfuly created!\n");
+		 waitForEnter();
 		 }// (else)
-          }else printf("\nmax amount of vectors reached\n");// if vectorCount < MAXVECTORS
+          }else{ printf("\nerror! max amount of vectors reached\n");// if vectorCount < MAXVECTORS
+		 waitForEnter();
+	   }
 	}// if option = 1
 
 	if(option == 2){
@@ -77,27 +96,31 @@ while(1){
 	    while(1){
 		if(vectorCount < 0){
 			printVectors(vector, &vectorCount);
+			waitForEnter();
 			break;
 		}
 		printVectors(vector, &vectorCount);
 		printf("which vector do you want to delete:");
 		while(1){
 			if(!scanf("%d", &deleteOpt) || deleteOpt > vectorCount + 1 || deleteOpt < 1){
-				printf("invalid input, try again:");
+				printf("\ninvalid input, try again:");
 				clear_input_buffer();
 				continue;
 			}else clear_input_buffer(); break;
 		}
 		vectorDelete(vector, &vectorCount, &deleteOpt);
 		printf("\nvector successfuly deleted!\n");
+		waitForEnter();
 		break;
 	    }//while
 	}// if option = 2
 
 
 	if(option == 3){
-
+		delay(200);
+		CLEAR_SCREEN();
 		printVectors(vector, &vectorCount);
+		waitForEnter();
 	}// if option = 3
 
 	if(option == 4){
@@ -105,11 +128,13 @@ while(1){
 		while(1){
 
 		if(vectorCount == MAXVECTORS - 1){
-			printf("\nmax amount of vectors reached\n");
+			printf("\nerror! max amount of vectors reached\n");
+			waitForEnter();
 			break;
 		}
                 if(vectorCount < 0){
                         printVectors(vector, &vectorCount);
+			waitForEnter();
                         break;
                 }
 		if((arrCount - vectorCount) == 1){
@@ -117,8 +142,10 @@ while(1){
                         vector = reallocVec(vector, &arrCount);
 
                 }
+		delay(200);
+		CLEAR_SCREEN();
 		printVectors(vector, &vectorCount);
-		printf("\nchoose 2 vectors to add together");
+		printf("choose 2 vectors to add together\n");
 		while(1){
 
 		printf("\nfirst vector:");
@@ -146,6 +173,7 @@ while(1){
 
 		if(checkType(vector, add1, add2) == -1){
 			printf("\nincompatible types\n");
+			waitForEnter();
 			break;
 		}
 		vectorCount += 1;
@@ -153,6 +181,7 @@ while(1){
 		add2 -= 1;
 		vector[vectorCount] = vectorAdd(vector, &add1, &add2);
 		printf("\nvectors successfuly summed!\n");
+		waitForEnter();
 		break;
 		}//big while
 	}// if option = 4
@@ -162,16 +191,19 @@ while(1){
 	     while(1){
 		if(vectorCount < 0){
                         printVectors(vector, &vectorCount);
-                        break;
+                        waitForEnter();
+			break;
                 }
+		delay(200);
+		CLEAR_SCREEN();
                 printVectors(vector, &vectorCount);
-                printf("\nchoose 2 vectors to add together");
+                printf("choose 2 vectors to find their dot product");
                 while(1){
 
-                printf("\nfirst vector:");
+                printf("\n\nfirst vector:");
                 if(!scanf("%d", &add1) || add1 > vectorCount + 1 || add1 < 1){
                         clear_input_buffer();
-                        printf("\ninvalid input, try again");
+                        printf("\n\ninvalid input, try again");
                         continue;
                 }else{
                          clear_input_buffer();
@@ -184,7 +216,7 @@ while(1){
                 if(!scanf("%d", &add2) || add2 > vectorCount + 1 || add2 < 1){
 
                 clear_input_buffer();
-                printf("\ninvalid input, try again");
+                printf("\n\ninvalid input, try again");
                 continue;
                 }else{
                          clear_input_buffer();
@@ -193,22 +225,25 @@ while(1){
 
                 if(checkType(vector, add1, add2) == -1){
                         printf("\nincompatible types\n");
-                        break;
+                        waitForEnter();
+			break;
                 }
                 add1 -= 1;
                 add2 -= 1;
                 if(vectorDotProduct(vector, &add1, &add2, &iDotProd, &fDotProd) == 0){
-
+			printf("\n");
 			printOneVector(vector, &add1);
 			printf(" • ");
 			printOneVector(vector, &add2);
 			printf(" = %d\n", iDotProd);
+			waitForEnter();
 		}else {
-
+			printf("\n");
 			printOneVector(vector, &add1);
                         printf(" • ");
                         printOneVector(vector, &add2);
                         printf(" = %.4f\n", fDotProd);
+			waitForEnter();
 		}
                 break;
                 }//big while
