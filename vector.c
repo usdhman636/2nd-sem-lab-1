@@ -171,7 +171,7 @@ errors printVectors(vectors* v1[], const int* vectorCount){
 
 	printf("\n");
 	if(*vectorCount < 0){
-		printf("\nno available vectors\n\n");
+		printf("\nНет доступных векторов\n\n");
 		return failedToPrint;
 	}
 	for(int i = 0; i <= *vectorCount; i++) {
