@@ -6,7 +6,7 @@ OBJ = main.o int.o float.o vector.o errors.o io.o
 program: $(OBJ)
 	$(CC) $(CFLAGS)  -o run $(OBJ)
 
-src/%.o: %.c
+%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:

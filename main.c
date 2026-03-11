@@ -119,7 +119,6 @@ while(1){
 
 
 	if(option == 3){
-		delay(200);
 		CLEAR_SCREEN();
 		printVectors(vector, &vectorCount);
 		waitForEnter();
