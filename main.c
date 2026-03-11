@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <windows.h>
+
 #include "int.h"
 #include "float.h"
 #include "vector.h"
@@ -11,6 +13,8 @@
 
 int main()
 {
+   SetConsoleOutputCP(CP_UTF8);
+   SetConsoleCP(CP_UTF8);
 
 int option = 0, deleteOpt = 0;
 int add1 = 0, add2 = 0;
@@ -30,25 +34,25 @@ while(1){
 	printf("\n╔════════════════════════════╗");
 	printf("\n║     VECTOR PROGRAM MENU    ║");
 	printf("\n╠════════════════════════════╣");
-	printf("\n║ 1.   Create a vector       ║");
-	printf("\n║ 2.   Delete a vector       ║");
-	printf("\n║ 3.   Show vector list      ║");
-	printf("\n║ 4.   Add vectors together  ║");
-	printf("\n║ 5.   Find dot product      ║");
-	printf("\n║ 6.   Test program          ║");
-	printf("\n║ 7.   Exit                  ║");
+	printf("\n║ 1.   Создать вектор        ║");
+	printf("\n║ 2.   Удалить вектор        ║");
+	printf("\n║ 3.   Список векторов       ║");
+	printf("\n║ 4.   Сложить векторы       ║");
+	printf("\n║ 5.   Скалярное произведение║");
+	printf("\n║ 6.   Тест программы        ║");
+	printf("\n║ 7.   Выход                 ║");
 	printf("\n╚════════════════════════════╝");
-	printf("\nYour choice: ");
+	printf("\nваш выбор: ");
 
 	while(1){
 		if(!scanf("%d",&option)){
 		clear_input_buffer();
-		printf("\ninvalid option, try again:");
+		printf("\nНеверный ввод, попробуйте еще раз:");
 		continue;
 		}
 		if(option < 1 || option > MAXOPTIONS){
 		clear_input_buffer();
-		printf("\ninvalid option, try again:");
+		printf("\nНеверный ввод, попробуйте еще раз:");
 		continue;
 		}
 	if(option != 6){testTrigger = -1;}
@@ -81,14 +85,14 @@ while(1){
 		vectorCount += 1;
 		if(createVectorScan(x, y, z, &tempX, &tempY, &tempZ) == 0){
 		vector[vectorCount] = createVector(getIntType(), tempX, tempY, tempZ, &result);
-		printf("\nvector successfully created!\n");
+		printf("\nВектор успешно создан!\n");
 		waitForEnter();
 		}else{
 		 vector[vectorCount] = createVector(getFloatType(), tempX, tempY, tempZ, &result);
-		 printf("\nvector successfully created!\n");
+		 printf("\nВектор успешно создан!\n");
 		 waitForEnter();
 		 }// (else)
-          }else{ printf("\nerror! max amount of vectors reached\n");// if vectorCount < MAXVECTORS
+          }else{ printf("\nОшибка! Достигнуто максимальное количество векторов.\n");// if vectorCount < MAXVECTORS
 		 waitForEnter();
 	   }
 	}// if option = 1
@@ -102,16 +106,16 @@ while(1){
 			break;
 		}
 		printVectors(vector, &vectorCount);
-		printf("which vector do you want to delete:");
+		printf("Какой вектор вы хотите удалить:");
 		while(1){
 			if(!scanf("%d", &deleteOpt) || deleteOpt > vectorCount + 1 || deleteOpt < 1){
-				printf("\ninvalid input, try again:");
+				printf("\nНеверный ввод, попробуйте еще раз:");
 				clear_input_buffer();
 				continue;
 			}else clear_input_buffer(); break;
 		}
 		vectorDelete(vector, &vectorCount, &deleteOpt);
-		printf("\nvector successfully deleted!\n");
+		printf("\nВектор успешно удалён!\n");
 		waitForEnter();
 		break;
 	    }//while
@@ -129,7 +133,7 @@ while(1){
 		while(1){
 
 		if(vectorCount == MAXVECTORS - 1){
-			printf("\nerror! max amount of vectors reached\n");
+			printf("\nОшибка! Достигнуто максимальное количество векторов.\n");
 			waitForEnter();
 			break;
 		}
@@ -145,13 +149,13 @@ while(1){
                 }
 		CLEAR_SCREEN();
 		printVectors(vector, &vectorCount);
-		printf("choose 2 vectors to add together\n");
+		printf("Выберите 2 вектора для сложения.\n");
 		while(1){
 
-		printf("\nfirst vector:");
+		printf("\nпервый вектор:");
 		if(!scanf("%d", &add1) || add1 > vectorCount + 1 || add1 < 1){
 			clear_input_buffer();
-			printf("\ninvalid input, try again.\n");
+			printf("\nНеверный ввод, попробуйте еще раз.\n");
 			continue;
 		}else{
 			 clear_input_buffer();
@@ -160,11 +164,11 @@ while(1){
 		}//inner while
 
 		while(1){
-		printf("\nsecond vector:");
+		printf("\nвторой вектор:");
 		if(!scanf("%d", &add2) || add2 > vectorCount + 1 || add2 < 1){
 
 		clear_input_buffer();
-		printf("\ninvalid input, try again.\n");
+		printf("\nНеверный ввод, попробуйте еще раз.\n");
 		continue;
 		}else{
 			 clear_input_buffer();
@@ -172,7 +176,7 @@ while(1){
 		}//inner while
 
 		if(checkType(vector, add1, add2) == -1){
-			printf("\nincompatible types\n");
+			printf("\nнесовместимые типы\n");
 			waitForEnter();
 			break;
 		}
@@ -180,7 +184,7 @@ while(1){
 		add1 -= 1;
 		add2 -= 1;
 		vector[vectorCount] = vectorAdd(vector, &add1, &add2);
-		printf("\nvectors successfully summed!\n");
+		printf("\nВекторы успешно сложены!!\n");
 		printOneVector(vector, &vectorCount);
 		printf("\n");
 		waitForEnter();
@@ -198,13 +202,13 @@ while(1){
                 }
 		CLEAR_SCREEN();
                 printVectors(vector, &vectorCount);
-                printf("choose 2 vectors to find their dot product");
+                printf("Выберите 2 вектора, чтобы найти их скалярное произведение.");
                 while(1){
 
-                printf("\n\nfirst vector:");
+                printf("\n\nпервый вектор:");
                 if(!scanf("%d", &add1) || add1 > vectorCount + 1 || add1 < 1){
                         clear_input_buffer();
-                        printf("\ninvalid input, try again.");
+                        printf("\nНеверный ввод, попробуйте еще раз.");
                         continue;
                 }else{
                          clear_input_buffer();
@@ -213,11 +217,11 @@ while(1){
                 }//inner while
 
                 while(1){
-                printf("\nsecond vector:");
+                printf("\nвторой вектор:");
                 if(!scanf("%d", &add2) || add2 > vectorCount + 1 || add2 < 1){
 
                 clear_input_buffer();
-                printf("\ninvalid input, try again.\n");
+                printf("\nНеверный ввод, попробуйте еще раз.\n");
                 continue;
                 }else{
                          clear_input_buffer();
@@ -225,7 +229,7 @@ while(1){
                 }//inner while
 
                 if(checkType(vector, add1, add2) == -1){
-                        printf("\nincompatible types\n");
+                        printf("\nнесовместимые типы\n");
                         waitForEnter();
 			break;
                 }
@@ -253,42 +257,42 @@ while(1){
 	if(option == 6){
 		if(testTrigger == 1){
 			CLEAR_SCREEN();
-			printf("\ncreating vectors...\n");
+			printf("\nсоздание векторов...\n");
 			delay(1500);
 			vectorCount +=1;
 			vector[0] = createVector(getIntType(), 5, 3, 7, &result);
-			printf("\n1st vector successfully created!\n");
+			printf("\nПервый вектор успешно создан!\n");
 			printOneVector(vector, &(int){0}); printf("\n");
 			delay(1500);
 			vectorCount +=1;
 			vector[1] = createVector(getFloatType(), 9.35, 1.18, 6, &result);
-			printf("\n2nd vector successfully created!\n");
+			printf("\nВторой вектор успешно создан!\n");
 			printOneVector(vector, &(int){1}); printf("\n");
 			vectorCount +=1;
 			vector[2] = createVector(getIntType(), 12, 4, 8, &result);
 			delay(1500);
-			printf("\n3rd vector successfully created!\n");
+			printf("\nТретий вектор успешно создан!\n");
 			printOneVector(vector, &(int){2}); printf("\n");
 			delay(1500);
 			printVectors(vector, &vectorCount);
 
 			delay(2000);
-			printf("\nadding vector 1 and 2\n");
+			printf("\nсложение векторов 1 и 2\n");
 			delay(1500);
 			if(checkType(vector, 1, 2) == -1){
-                        	printf("\nincompatible types\n");
+                        	printf("\nнесовместимые типы\n");
 			}
 			delay(2000);
-			printf("\nadding vector 1 and 3\n");
+			printf("\nсложение векотров 1 и 3\n");
 			vectorCount +=1;
 			delay(1500);
 			vector[vectorCount] = vectorAdd(vector,&(int){0}, &(int){2});
-                	printf("\nvectors successfully summed!\n");
+                	printf("\nВекторы успешно сложены!\n");
 			delay(1500);
 			printVectors(vector, &vectorCount);
 			delay(3000);
 
-			printf("\nfinding dot product of vector 3 and 4\n");
+			printf("\nнахождение скалярного произведения векторов 3 и 4\n");
 			fflush(stdout);
 			delay(1500);
 			vectorDotProduct(vector, &(int){2}, &(int){3}, &iDotProd, &fDotProd);
@@ -305,10 +309,10 @@ while(1){
                         printf(" = %d\n", iDotProd);
 			delay(3000);
 
-			printf("\ndeleting vector 2...\n");
+			printf("\nудаление вектора 2...\n");
 			delay(2000);
 			vectorDelete(vector, &vectorCount, &(int){2});
-                	printf("\nvector successfully deleted!\n");
+                	printf("\nВектор успешно удалён!\n");
 			delay(2000);
 			printVectors(vector, &vectorCount);
 
@@ -324,7 +328,7 @@ while(1){
 		}//testTrigger
 		else{
 
-			printf("\nTest program can only be run once\nand only at the start\n");
+			printf("\nтест программы может быть запущена только один раз\nи только в начале\n");
 			waitForEnter();
 			continue;
 

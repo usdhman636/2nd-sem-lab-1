@@ -24,11 +24,11 @@ int createVectorScan(char* x, char* y, char* z, float* tempX, float* tempY, floa
     int hasFloat = 0;
 
     while (1) {
-        printf("\nEnter x value: ");
+        printf("\nВведите x: ");
 
         if (scanf("%9s", x) != 1) {
             clear_input_buffer();
-            printf("\nInvalid input, try again.\n");
+            printf("\nНеверный ввод, попробуйте еще раз.\n");
             continue;
         }
 
@@ -48,15 +48,15 @@ int createVectorScan(char* x, char* y, char* z, float* tempX, float* tempY, floa
             break;
         }
 
-        printf("\nInvalid number, try again.\n");
+        printf("\nНеверный номер, попробуйте еще раз.\n");
     }
 
     while (1) {
-        printf("\nEnter y value: ");
+        printf("\nВведите y: ");
 
         if (scanf("%9s", y) != 1) {
             clear_input_buffer();
-            printf("\nInvalid input, try again.\n");
+            printf("\nНеверный ввод, попробуйте еще раз.\n");
             continue;
         }
 
@@ -76,15 +76,15 @@ int createVectorScan(char* x, char* y, char* z, float* tempX, float* tempY, floa
             break;
         }
 
-        printf("\nInvalid number, try again.\n");
+        printf("\nНеверный номер, попробуйте еще раз.\n");
     }
 
     while (1) {
-        printf("\nEnter z value: ");
+        printf("\nВведите z: ");
 
         if (scanf("%9s", z) != 1) {
             clear_input_buffer();
-            printf("\nInvalid input, try again.\n");
+            printf("\nНеверный ввод, попробуйте еще раз.\n");
             continue;
         }
 
@@ -104,7 +104,7 @@ int createVectorScan(char* x, char* y, char* z, float* tempX, float* tempY, floa
             break;
         }
 
-        printf("\nInvalid number, try again.\n");
+        printf("\nНеверный номер, попробуйте еще раз.\n");
     }
 
     return hasFloat;//0 for int || 1 for float
@@ -112,7 +112,7 @@ int createVectorScan(char* x, char* y, char* z, float* tempX, float* tempY, floa
 
 
 int waitForEnter(){
-    printf("\nPress ENTER to continue...");
+    printf("\nНажмите ENTER для продолжения...");
     clear_input_buffer();
     return 0;
 }
