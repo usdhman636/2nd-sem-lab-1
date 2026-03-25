@@ -75,9 +75,9 @@ vectors* vectorAdd(vectors* v1[], const int* add1, const int* add2){
                 vecRes->z = malloc(vecRes->type->size);
 	}
 
-	v1[*add1]->type->add(v1[*add1]->x, v1[*add2]->x, vecRes->x);
-        v1[*add1]->type->add(v1[*add1]->y, v1[*add2]->y, vecRes->y);
-        v1[*add1]->type->add(v1[*add1]->z, v1[*add2]->z, vecRes->z);
+	v1[*add1]->type->func->add(v1[*add1]->x, v1[*add2]->x, vecRes->x);
+        v1[*add1]->type->func->add(v1[*add1]->y, v1[*add2]->y, vecRes->y);
+        v1[*add1]->type->func->add(v1[*add1]->z, v1[*add2]->z, vecRes->z);
 
         return vecRes;
 }
@@ -93,9 +93,9 @@ int vectorDotProduct(vectors* v1[], int* arg1, int* arg2, int* iDotProd, float* 
                 vecRes->y = malloc(vecRes->type->size);
                 vecRes->z = malloc(vecRes->type->size);
 
-		v1[*arg1]->type->dotProduct(v1[*arg1]->x, v1[*arg2]->x, vecRes->x);
-        	v1[*arg1]->type->dotProduct(v1[*arg1]->y, v1[*arg2]->y, vecRes->y);
-        	v1[*arg1]->type->dotProduct(v1[*arg1]->z, v1[*arg2]->z, vecRes->z);
+		v1[*arg1]->type->func->dotProduct(v1[*arg1]->x, v1[*arg2]->x, vecRes->x);
+        	v1[*arg1]->type->func->dotProduct(v1[*arg1]->y, v1[*arg2]->y, vecRes->y);
+        	v1[*arg1]->type->func->dotProduct(v1[*arg1]->z, v1[*arg2]->z, vecRes->z);
 
 		*iDotProd = *(int*)vecRes->x + *(int*)vecRes->y + *(int*)vecRes->z;
 		return 0;
@@ -107,9 +107,9 @@ int vectorDotProduct(vectors* v1[], int* arg1, int* arg2, int* iDotProd, float* 
                 vecRes->y = malloc(vecRes->type->size);
                 vecRes->z = malloc(vecRes->type->size);
 
-		v1[*arg1]->type->dotProduct(v1[*arg1]->x, v1[*arg2]->x, vecRes->x);
-                v1[*arg1]->type->dotProduct(v1[*arg1]->y, v1[*arg2]->y, vecRes->y);
-                v1[*arg1]->type->dotProduct(v1[*arg1]->z, v1[*arg2]->z, vecRes->z);
+		v1[*arg1]->type->func->dotProduct(v1[*arg1]->x, v1[*arg2]->x, vecRes->x);
+                v1[*arg1]->type->func->dotProduct(v1[*arg1]->y, v1[*arg2]->y, vecRes->y);
+                v1[*arg1]->type->func->dotProduct(v1[*arg1]->z, v1[*arg2]->z, vecRes->z);
 
 		*fDotProd = *(float*)vecRes->x + *(float*)vecRes->y + *(float*)vecRes->z;
                 return 1;
@@ -167,47 +167,41 @@ errors vectorDelete(vectors* v1[], int* vectorCount, const int* deleteOpt){
 }
 
 
-errors printVectors(vectors* v1[], const int* vectorCount){
-
-	printf("\n");
-	if(*vectorCount < 0){
-		printf("\nНет доступных векторов\n\n");
-		return failedToPrint;
-	}
-	for(int i = 0; i <= *vectorCount; i++) {
-   	char* str = v1[i]->type->print(v1[i]->x);
+char* printVector(vectors* v1[], int i){
+	static char buffer[50];
+	static char tmp1[12];
+	static char tmp2[12];
+	static char tmp3[12];
+   	char* str = v1[i]->type->func->print(v1[i]->x);
+	sprintf(tmp1, "%s", str);
+	str = v1[i]->type->func->print(v1[i]->y);
+	sprintf(tmp2, "%s", str);
+	str = v1[i]->type->func->print(v1[i]->z);
+	sprintf(tmp3, "%s", str);
 	if(v1[i]->type == getIntType()) {
-                printf("%d-int vector (%s", i+1, str);
+                sprintf(buffer, "int vector (%s, %s, %s)", tmp1, tmp2, tmp3);
+		return buffer;
         } else {
-                printf("%d-float vector (%s", i+1, str);
+                sprintf(buffer, "float vector (%s, %s, %s)", tmp1, tmp2, tmp3);
+                return buffer;
           }
-
-    	      str = v1[i]->type->print(v1[i]->y);
-	printf(", %s",str);
-
-    	      str = v1[i]->type->print(v1[i]->z);
-	printf(", %s)\n",str);
-
-	}
-	printf("\n");
-	return success;
 
 }
 
-errors printOneVector(vectors* v1[], const int* arg){
+/*errors printOneVector(vectors* v1[], const int* arg){
 
-	char* str = v1[*arg]->type->print(v1[*arg]->x);
+	char* str = v1[*arg]->type->func->print(v1[*arg]->x);
                 printf("(%s", str);
 
-              str = v1[*arg]->type->print(v1[*arg]->y);
+              str = v1[*arg]->type->func->print(v1[*arg]->y);
 		printf(", %s",str);
 
-              str = v1[*arg]->type->print(v1[*arg]->z);
+              str = v1[*arg]->type->func->print(v1[*arg]->z);
         	printf(", %s)",str);
 
         return success;
 
-}
+}*/
 
 int checkType(vectors* v1[], int add1, int add2){
 

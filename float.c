@@ -25,18 +25,23 @@ itype* getFloatType(){
         if(FLOAT_INPUT_TYPE == NULL){
                 FLOAT_INPUT_TYPE = malloc(sizeof(itype));
                 if(FLOAT_INPUT_TYPE == NULL) exit(1);
+                FLOAT_INPUT_TYPE->func = malloc(sizeof(itypeFunc));
+                if(FLOAT_INPUT_TYPE->func == NULL) exit(1);
                 FLOAT_INPUT_TYPE->size = sizeof(float);
 		FLOAT_INPUT_TYPE->value = 1;
-                FLOAT_INPUT_TYPE->add = floatAdd;
-                FLOAT_INPUT_TYPE->dotProduct = floatDotProduct;
-                FLOAT_INPUT_TYPE->print = floatPrint;
+                FLOAT_INPUT_TYPE->func->add = floatAdd;
+                FLOAT_INPUT_TYPE->func->dotProduct = floatDotProduct;
+                FLOAT_INPUT_TYPE->func->print = floatPrint;
         }
    return FLOAT_INPUT_TYPE;
 }
 
 int freeFLOAT(){
 
+	while(1){
+	if(FLOAT_INPUT_TYPE == NULL) break;
+	free(FLOAT_INPUT_TYPE->func);
 	free(FLOAT_INPUT_TYPE);
 	return 0;
-
+	}
 }

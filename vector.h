@@ -28,9 +28,9 @@ errors vectorDelete(vectors* v1[], int* vectorCount, const int* deleteOpt);
 
 errors freeVector(vectors* v1);
 
-errors printVectors(vectors* v1[], const int* vectorCount);
+char* printVector(vectors* v1[], int vectorCount);
 
-errors printOneVector(vectors* v1[], const int* arg);
+//errors printOneVector(vectors* v1[], const int* arg);
 
 int checkType(vectors* v1[], int add1, int add2);
 

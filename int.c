@@ -26,18 +26,22 @@ itype* getIntType(){
 	if(INT_INPUT_TYPE == NULL){
 		INT_INPUT_TYPE = malloc(sizeof(itype));
 		if(INT_INPUT_TYPE == NULL) exit(1);
+		INT_INPUT_TYPE->func = malloc(sizeof(itypeFunc));
+		if(INT_INPUT_TYPE->func == NULL) exit(1);
 		INT_INPUT_TYPE->size = sizeof(int);
 		INT_INPUT_TYPE->value = 0;
-        	INT_INPUT_TYPE->add = intAdd;
-        	INT_INPUT_TYPE->dotProduct = intDotProduct;
-        	INT_INPUT_TYPE->print = intPrint;
+        	INT_INPUT_TYPE->func->add = intAdd;
+        	INT_INPUT_TYPE->func->dotProduct = intDotProduct;
+        	INT_INPUT_TYPE->func->print = intPrint;
 	}
    return INT_INPUT_TYPE;
 }
 
 int freeINT(){
-
+	while(1){
+	if(INT_INPUT_TYPE == NULL) break;
+	free(INT_INPUT_TYPE->func);
 	free(INT_INPUT_TYPE);
 	return 0;
-
+	}
 }

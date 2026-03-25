@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <windows.h>
+//#include <windows.h>
 
 #include "int.h"
 #include "float.h"
@@ -13,8 +13,8 @@
 
 int main()
 {
-   SetConsoleOutputCP(CP_UTF8);
-   SetConsoleCP(CP_UTF8);
+//   SetConsoleOutputCP(CP_UTF8);
+//   SetConsoleCP(CP_UTF8);
 
 int option = 0, deleteOpt = 0;
 int add1 = 0, add2 = 0;
@@ -101,12 +101,14 @@ while(1){
 
 	    while(1){
 		if(vectorCount < 0){
-			printVectors(vector, &vectorCount);
+			printf("\nНет доступных векторов\n");
 			waitForEnter();
 			break;
 		}
-		printVectors(vector, &vectorCount);
-		printf("Какой вектор вы хотите удалить:");
+		for(int i = 0; i <= vectorCount; i++){
+                printf("\n%d-%s\n",i+1,printVector(vector, i));
+                }
+		printf("\nКакой вектор вы хотите удалить:");
 		while(1){
 			if(!scanf("%d", &deleteOpt) || deleteOpt > vectorCount + 1 || deleteOpt < 1){
 				printf("\nНеверный ввод, попробуйте еще раз:");
@@ -124,7 +126,13 @@ while(1){
 
 	if(option == 3){
 		CLEAR_SCREEN();
-		printVectors(vector, &vectorCount);
+		if(vectorCount < 0){
+		printf("\nНет доступных векторов\n");
+		}else{
+			for(int i = 0; i <= vectorCount; i++){
+			printf("\n%d-%s\n",i+1,printVector(vector, i));
+			}
+		}
 		waitForEnter();
 	}// if option = 3
 
@@ -138,7 +146,7 @@ while(1){
 			break;
 		}
                 if(vectorCount < 0){
-                        printVectors(vector, &vectorCount);
+                        printf("\nНет доступных векторов\n");
 			waitForEnter();
                         break;
                 }
@@ -148,8 +156,10 @@ while(1){
 
                 }
 		CLEAR_SCREEN();
-		printVectors(vector, &vectorCount);
-		printf("Выберите 2 вектора для сложения.\n");
+                for(int i = 0; i <= vectorCount; i++){
+                printf("\n%d-%s\n",i+1,printVector(vector, i));
+                }
+		printf("\nВыберите 2 вектора для сложения.\n");
 		while(1){
 
 		printf("\nпервый вектор:");
@@ -185,7 +195,7 @@ while(1){
 		add2 -= 1;
 		vector[vectorCount] = vectorAdd(vector, &add1, &add2);
 		printf("\nВекторы успешно сложены!!\n");
-		printOneVector(vector, &vectorCount);
+		printf("\n%s",printVector(vector, vectorCount));
 		printf("\n");
 		waitForEnter();
 		break;
@@ -196,13 +206,15 @@ while(1){
 
 	     while(1){
 		if(vectorCount < 0){
-                        printVectors(vector, &vectorCount);
+                        printf("\nНет доступных векторов\n");
                         waitForEnter();
 			break;
                 }
 		CLEAR_SCREEN();
-                printVectors(vector, &vectorCount);
-                printf("Выберите 2 вектора, чтобы найти их скалярное произведение.");
+                for(int i = 0; i <= vectorCount; i++){
+                printf("\n%d-%s\n",i+1,printVector(vector, i));
+                }
+                printf("\nВыберите 2 вектора, чтобы найти их скалярное произведение.");
                 while(1){
 
                 printf("\n\nпервый вектор:");
@@ -237,16 +249,16 @@ while(1){
                 add2 -= 1;
                 if(vectorDotProduct(vector, &add1, &add2, &iDotProd, &fDotProd) == 0){
 			printf("\n");
-			printOneVector(vector, &add1);
+			printf("%s",printVector(vector, add1));
 			printf(" • ");
-			printOneVector(vector, &add2);
+			printf("%s",printVector(vector, add2));
 			printf(" = %d\n", iDotProd);
 			waitForEnter();
 		}else {
 			printf("\n");
-			printOneVector(vector, &add1);
+			printf("%s",printVector(vector, add1));
                         printf(" • ");
-                        printOneVector(vector, &add2);
+                        printf("%s",printVector(vector, add2));
                         printf(" = %.3f\n", fDotProd);
 			waitForEnter();
 		}
@@ -255,7 +267,7 @@ while(1){
 	}
 
 	if(option == 6){
-		if(testTrigger == 1){
+/*		if(testTrigger == 1){
 			CLEAR_SCREEN();
 			printf("\nсоздание векторов...\n");
 			delay(1500);
@@ -332,7 +344,7 @@ while(1){
 			waitForEnter();
 			continue;
 
-		}
+		}*/
 	}
 }// main while loop
 
