@@ -8,7 +8,9 @@
 
 int delay(int milliseconds);
 
-int createVectorScan(char* x, char* y, char* z, float* tempX, float* tempY, float* tempZ);
+int inputCheck(char* x);//to check if input is correct
+
+int typeAssign(char* x, char* y, char* z, float* tempX, float* tempY, float* tempZ);
 
 int waitForEnter();
 

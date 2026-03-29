@@ -19,25 +19,16 @@ int delay(int milliseconds) {
     return 0;
 }
 
-int createVectorScan(char* x, char* y, char* z, float* tempX, float* tempY, float* tempZ){
+int typeAssign(char* x, char* y, char* z, float* tempX, float* tempY, float* tempZ){
     char *endptr;
     int hasFloat = 0;
 
-    while (1) {
-        printf("\nВведите x: ");
-
-        if (scanf("%9s", x) != 1) {
-            clear_input_buffer();
-            printf("\nНеверный ввод, попробуйте еще раз.\n");
-            continue;
-        }
-
-	clear_input_buffer();
+	while(1){
         long intValue = strtol(x, &endptr, 10);
 
         if (*endptr == '\0') {
             *tempX = (float)intValue;
-            break;
+	    break;
         }
 
         float floatValue = strtof(x, &endptr);
@@ -45,28 +36,17 @@ int createVectorScan(char* x, char* y, char* z, float* tempX, float* tempY, floa
         if (*endptr == '\0') {
             *tempX = floatValue;
             hasFloat = 1;
-            break;
+	    break;
         }
+	}
 
-        printf("\nНеверный номер, попробуйте еще раз.\n");
-    }
-
-    while (1) {
-        printf("\nВведите y: ");
-
-        if (scanf("%9s", y) != 1) {
-            clear_input_buffer();
-            printf("\nНеверный ввод, попробуйте еще раз.\n");
-            continue;
-        }
-
-	clear_input_buffer();
+	while(1){
         long intValue = strtol(y, &endptr, 10);
 
         if (*endptr == '\0') {
             *tempY = (float)intValue;
             break;
-        }
+	}
 
         float floatValue = strtof(y, &endptr);
 
@@ -74,27 +54,16 @@ int createVectorScan(char* x, char* y, char* z, float* tempX, float* tempY, floa
             *tempY = floatValue;
             hasFloat = 1;
             break;
-        }
+	}
+	}
 
-        printf("\nНеверный номер, попробуйте еще раз.\n");
-    }
-
-    while (1) {
-        printf("\nВведите z: ");
-
-        if (scanf("%9s", z) != 1) {
-            clear_input_buffer();
-            printf("\nНеверный ввод, попробуйте еще раз.\n");
-            continue;
-        }
-
-	clear_input_buffer();
+	while(1){
         long intValue = strtol(z, &endptr, 10);
 
         if (*endptr == '\0') {
             *tempZ = (float)intValue;
             break;
-        }
+	}
 
         float floatValue = strtof(z, &endptr);
 
@@ -102,14 +71,29 @@ int createVectorScan(char* x, char* y, char* z, float* tempX, float* tempY, floa
             *tempZ = floatValue;
             hasFloat = 1;
             break;
-        }
-
-        printf("\nНеверный номер, попробуйте еще раз.\n");
-    }
+	}
+	}
 
     return hasFloat;//0 for int || 1 for float
 }
 
+int inputCheck(char* x){
+
+	char* endptr;
+
+        long intValue = strtol(x, &endptr, 10);
+
+        if (*endptr == '\0') {
+            return 0;//success
+        }
+
+        float floatValue = strtof(x, &endptr);
+
+        if (*endptr == '\0') {
+            return 0;//success
+        }else return 1;// fail
+
+}
 
 int waitForEnter(){
     printf("\nНажмите ENTER для продолжения...");

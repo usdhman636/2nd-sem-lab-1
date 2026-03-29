@@ -28,7 +28,6 @@ int vectorCount = -1;
 errors result = success;
 int testTrigger = 1;
 
-
 while(1){
 	CLEAR_SCREEN();
 	printf("\n╔════════════════════════════╗");
@@ -83,7 +82,58 @@ while(1){
 
 		}
 		vectorCount += 1;
-		if(createVectorScan(x, y, z, &tempX, &tempY, &tempZ) == 0){
+		    while (1) {
+        printf("\nВведите x: ");
+
+        if (scanf("%9s", x) != 1) {
+            clear_input_buffer();
+            printf("\nНеверный ввод, попробуйте еще раз.\n");
+            continue;
+        }
+
+        clear_input_buffer();
+
+        if(inputCheck(x) == 1){
+		printf("\nНеверный номер, попробуйте еще раз.\n");
+		continue;
+	}else break;
+    }
+
+    while (1) {
+        printf("\nВведите y: ");
+
+        if (scanf("%9s", y) != 1) {
+            clear_input_buffer();
+            printf("\nНеверный ввод, попробуйте еще раз.\n");
+            continue;
+        }
+
+        clear_input_buffer();
+
+	if(inputCheck(y) == 1){
+                printf("\nНеверный номер, попробуйте еще раз.\n");
+                continue;
+        }else break;
+    }
+
+    while (1) {
+        printf("\nВведите z: ");
+
+        if (scanf("%9s", z) != 1) {
+            clear_input_buffer();
+            printf("\nНеверный ввод, попробуйте еще раз.\n");
+            continue;
+        }
+
+        clear_input_buffer();
+
+	if(inputCheck(z) == 1){
+                printf("\nНеверный номер, попробуйте еще раз.\n");
+                continue;
+        }else break;
+    }
+
+		if(typeAssign(x, y, z, &tempX, &tempY, &tempZ) == 0){
 		vector[vectorCount] = createVector(getIntType(), tempX, tempY, tempZ, &result);
 		printf("\nВектор успешно создан!\n");
 		waitForEnter();
