@@ -5,9 +5,10 @@
 #include <stdlib.h>
 
 typedef enum {
-	memoAlocFailed = 100,
+	memoAllocFailed = 100,
 	differentTypes = 200,
 	failedToPrint = 300,
+	failedToCheck = 400,
 	success = 0,
 
 }errors;

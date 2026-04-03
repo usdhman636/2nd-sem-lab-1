@@ -21,11 +21,11 @@ int add1 = 0, add2 = 0;
 int iDotProd;
 float fDotProd;
 int arrCount = 10; //for malloc
-vectors **vector = initiateVecArr();
+errors opRes = success;
+vectors **vector = initiateVecArr(&opRes);
 char x[10], y[10], z[10];
 float tempX = 0, tempY = 0, tempZ = 0;
 int vectorCount = -1;
-errors result = success;
 int testTrigger = 1;
 
 while(1){
@@ -78,7 +78,7 @@ while(1){
 	  if(vectorCount < MAXVECTORS - 1){
 		if((arrCount - vectorCount) == 1){
 
-			vector = reallocVec(vector, &arrCount);
+			vector = reallocVec(vector, &arrCount, &opRes);
 
 		}
 		vectorCount += 1;
@@ -134,11 +134,11 @@ while(1){
     }
 
 		if(typeAssign(x, y, z, &tempX, &tempY, &tempZ) == 0){
-		vector[vectorCount] = createVector(getIntType(), tempX, tempY, tempZ, &result);
+		vector[vectorCount] = createVector(getIntType(), tempX, tempY, tempZ, &opRes);
 		printf("\nВектор успешно создан!\n");
 		waitForEnter();
 		}else{
-		 vector[vectorCount] = createVector(getFloatType(), tempX, tempY, tempZ, &result);
+		 vector[vectorCount] = createVector(getFloatType(), tempX, tempY, tempZ, &opRes);
 		 printf("\nВектор успешно создан!\n");
 		 waitForEnter();
 		 }// (else)
@@ -156,7 +156,7 @@ while(1){
 			break;
 		}
 		for(int i = 0; i <= vectorCount; i++){
-                printf("\n%d-%s\n",i+1,printVector(vector, i));
+                printf("\n%d-%s\n",i+1,printVector(vector, i, &opRes));
                 }
 		printf("\nКакой вектор вы хотите удалить:");
 		while(1){
@@ -180,7 +180,7 @@ while(1){
 		printf("\nНет доступных векторов\n");
 		}else{
 			for(int i = 0; i <= vectorCount; i++){
-			printf("\n%d-%s\n",i+1,printVector(vector, i));
+			printf("\n%d-%s\n",i+1,printVector(vector, i, &opRes));
 			}
 		}
 		waitForEnter();
@@ -202,12 +202,12 @@ while(1){
                 }
 		if((arrCount - vectorCount) == 1){
 
-                        vector = reallocVec(vector, &arrCount);
+                        vector = reallocVec(vector, &arrCount, &opRes);
 
                 }
 		CLEAR_SCREEN();
                 for(int i = 0; i <= vectorCount; i++){
-                printf("\n%d-%s\n",i+1,printVector(vector, i));
+                printf("\n%d-%s\n",i+1,printVector(vector, i, &opRes));
                 }
 		printf("\nВыберите 2 вектора для сложения.\n");
 		while(1){
@@ -235,7 +235,7 @@ while(1){
 			 break;}
 		}//inner while
 
-		if(checkType(vector, add1, add2) == -1){
+		if(checkType(vector, add1, add2, &opRes) == -1){
 			printf("\nнесовместимые типы\n");
 			waitForEnter();
 			break;
@@ -243,9 +243,9 @@ while(1){
 		vectorCount += 1;
 		add1 -= 1;
 		add2 -= 1;
-		vector[vectorCount] = vectorAdd(vector, &add1, &add2);
+		vector[vectorCount] = vectorAdd(vector, &add1, &add2, &opRes);
 		printf("\nВекторы успешно сложены!!\n");
-		printf("\n%s",printVector(vector, vectorCount));
+		printf("\n%s",printVector(vector, vectorCount, &opRes));
 		printf("\n");
 		waitForEnter();
 		break;
@@ -262,7 +262,7 @@ while(1){
                 }
 		CLEAR_SCREEN();
                 for(int i = 0; i <= vectorCount; i++){
-                printf("\n%d-%s\n",i+1,printVector(vector, i));
+                printf("\n%d-%s\n",i+1,printVector(vector, i, &opRes));
                 }
                 printf("\nВыберите 2 вектора, чтобы найти их скалярное произведение.");
                 while(1){
@@ -290,25 +290,25 @@ while(1){
                          break;}
                 }//inner while
 
-                if(checkType(vector, add1, add2) == -1){
+                if(checkType(vector, add1, add2, &opRes) == -1){
                         printf("\nнесовместимые типы\n");
                         waitForEnter();
 			break;
                 }
                 add1 -= 1;
                 add2 -= 1;
-                if(vectorDotProduct(vector, &add1, &add2, &iDotProd, &fDotProd) == 0){
+                if(vectorDotProduct(vector, &add1, &add2, &iDotProd, &fDotProd, &opRes) == 0){
 			printf("\n");
-			printf("%s",printVector(vector, add1));
+			printf("%s",printVector(vector, add1, &opRes));
 			printf(" • ");
-			printf("%s",printVector(vector, add2));
+			printf("%s",printVector(vector, add2, &opRes));
 			printf(" = %d\n", iDotProd);
 			waitForEnter();
 		}else {
 			printf("\n");
-			printf("%s",printVector(vector, add1));
+			printf("%s",printVector(vector, add1, &opRes));
                         printf(" • ");
-                        printf("%s",printVector(vector, add2));
+                        printf("%s",printVector(vector, add2, &opRes));
                         printf(" = %.3f\n", fDotProd);
 			waitForEnter();
 		}

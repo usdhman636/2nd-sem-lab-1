@@ -5,30 +5,37 @@
 #include "int.h"
 #include "float.h"
 
-vectors** initiateVecArr(){
+vectors** initiateVecArr(errors* opRes){
 
 	vectors** vecArr = malloc(10 * sizeof(vectors*));
 
-	if(vecArr == NULL) exit(1);
-
+	if(vecArr == NULL){
+		*opRes = memoAllocFailed;
+		 exit(1);
+	}
+	*opRes = success;
 	return vecArr;
 
 }
 
-vectors** reallocVec(vectors** v1, int* arrCount){
+vectors** reallocVec(vectors** v1, int* arrCount, errors* opRes){
 
 	*arrCount += 10;
 	vectors** tmpVec = realloc(v1,*arrCount * sizeof(vectors*));
-	if(tmpVec == NULL) exit(1);
+	if(tmpVec == NULL){
+		*opRes = memoAllocFailed;
+		exit(1);
+	}
+	*opRes = success;
 	return tmpVec;
 
 }
 
-vectors* createVector(itype* TYPE, float x, float y, float z, errors* result){
+vectors* createVector(itype* TYPE, float x, float y, float z, errors* opRes){
 
 	vectors* vector = malloc(sizeof(vectors));
         if (vector == NULL) {
-        	*result = memoAlocFailed;
+        	*opRes = memoAllocFailed;
         	exit(1);
     }
 	vector->type = TYPE;
@@ -36,7 +43,7 @@ vectors* createVector(itype* TYPE, float x, float y, float z, errors* result){
 	vector->y = malloc(TYPE->size);
 	vector->z = malloc(TYPE->size);
 	if (vector->x == NULL || vector->y == NULL || vector->z == NULL){
-		*result = memoAlocFailed;
+		*opRes = memoAllocFailed;
 		exit(1);
 	}
 	if (TYPE == getIntType()) {
@@ -51,14 +58,18 @@ vectors* createVector(itype* TYPE, float x, float y, float z, errors* result){
 	        memcpy(vector->y, &y, TYPE->size);
 	        memcpy(vector->z, &z, TYPE->size);
     }
-	*result = success;
+	*opRes = success;
 	return vector;
 }
 
-vectors* vectorAdd(vectors* v1[], const int* add1, const int* add2){
+vectors* vectorAdd(vectors* v1[], const int* add1, const int* add2, errors* opRes){
 
 
 	vectors* vecRes = malloc(sizeof(vectors));
+	if(vecRes == NULL){
+		*opRes = memoAllocFailed;
+		exit(1);
+	}
 
 	if(v1[*add1]->type->value == 0){
 
@@ -75,16 +86,26 @@ vectors* vectorAdd(vectors* v1[], const int* add1, const int* add2){
                 vecRes->z = malloc(vecRes->type->size);
 	}
 
+	if (vecRes->x == NULL || vecRes->y == NULL || vecRes->z == NULL){
+                *opRes = memoAllocFailed;
+                exit(1);
+        }
+
 	v1[*add1]->type->func->add(v1[*add1]->x, v1[*add2]->x, vecRes->x);
         v1[*add1]->type->func->add(v1[*add1]->y, v1[*add2]->y, vecRes->y);
         v1[*add1]->type->func->add(v1[*add1]->z, v1[*add2]->z, vecRes->z);
 
+	*opRes = success;
         return vecRes;
 }
 
-int vectorDotProduct(vectors* v1[], int* arg1, int* arg2, int* iDotProd, float* fDotProd){
+int vectorDotProduct(vectors* v1[], int* arg1, int* arg2, int* iDotProd, float* fDotProd, errors* opRes){
 
 	vectors* vecRes = malloc(sizeof(vectors));
+	if(vecRes == NULL){
+		*opRes = memoAllocFailed;
+		exit(1);
+	}
 
         if(v1[*arg1]->type->value == 0){
 
@@ -92,12 +113,17 @@ int vectorDotProduct(vectors* v1[], int* arg1, int* arg2, int* iDotProd, float* 
                 vecRes->x = malloc(vecRes->type->size);
                 vecRes->y = malloc(vecRes->type->size);
                 vecRes->z = malloc(vecRes->type->size);
+		if (vecRes->x == NULL || vecRes->y == NULL || vecRes->z == NULL){
+                	*opRes = memoAllocFailed;
+                	exit(1);
+        	}
 
 		v1[*arg1]->type->func->dotProduct(v1[*arg1]->x, v1[*arg2]->x, vecRes->x);
         	v1[*arg1]->type->func->dotProduct(v1[*arg1]->y, v1[*arg2]->y, vecRes->y);
         	v1[*arg1]->type->func->dotProduct(v1[*arg1]->z, v1[*arg2]->z, vecRes->z);
 
 		*iDotProd = *(int*)vecRes->x + *(int*)vecRes->y + *(int*)vecRes->z;
+		*opRes = success;
 		return 0;
 
         }else {
@@ -106,13 +132,18 @@ int vectorDotProduct(vectors* v1[], int* arg1, int* arg2, int* iDotProd, float* 
                 vecRes->x = malloc(vecRes->type->size);
                 vecRes->y = malloc(vecRes->type->size);
                 vecRes->z = malloc(vecRes->type->size);
+		if (vecRes->x == NULL || vecRes->y == NULL || vecRes->z == NULL){
+                	*opRes = memoAllocFailed;
+                	exit(1);
+        	}
 
 		v1[*arg1]->type->func->dotProduct(v1[*arg1]->x, v1[*arg2]->x, vecRes->x);
                 v1[*arg1]->type->func->dotProduct(v1[*arg1]->y, v1[*arg2]->y, vecRes->y);
                 v1[*arg1]->type->func->dotProduct(v1[*arg1]->z, v1[*arg2]->z, vecRes->z);
 
 		*fDotProd = *(float*)vecRes->x + *(float*)vecRes->y + *(float*)vecRes->z;
-                return 1;
+                *opRes = success;
+		return 1;
 
         }
 }
@@ -139,7 +170,7 @@ errors vectorDelete(vectors* v1[], int* vectorCount, const int* deleteOpt){
 		freeVector(v1[i]);
 		v1[i] = malloc(sizeof(vectors));
      		if (v1[i] == NULL) {
-                	return memoAlocFailed;
+                	return memoAllocFailed;
     		}
 		if(v1[i + 1]->type == getIntType()){
 
@@ -154,7 +185,7 @@ errors vectorDelete(vectors* v1[], int* vectorCount, const int* deleteOpt){
                         v1[i]->z = malloc(v1[i]->type->size);
 		}
 		if (v1[i]->x == NULL || v1[i]->y == NULL || v1[i]->z == NULL){
-                return  memoAlocFailed;
+                return  memoAllocFailed;
         	}
 		memcpy(v1[i]->x, v1[i + 1]->x, v1[i]->type->size);
 		memcpy(v1[i]->y, v1[i + 1]->y, v1[i]->type->size);
@@ -167,7 +198,7 @@ errors vectorDelete(vectors* v1[], int* vectorCount, const int* deleteOpt){
 }
 
 
-char* printVector(vectors* v1[], int i){
+char* printVector(vectors* v1[], int i, errors* opRes){
 	static char buffer[50];
 	static char tmp1[12];
 	static char tmp2[12];
@@ -180,11 +211,15 @@ char* printVector(vectors* v1[], int i){
 	sprintf(tmp3, "%s", str);
 	if(v1[i]->type == getIntType()) {
                 sprintf(buffer, "int vector (%s, %s, %s)", tmp1, tmp2, tmp3);
+		*opRes = success;
 		return buffer;
-        } else {
+        } else if(v1[i]->type == getFloatType()) {
                 sprintf(buffer, "float vector (%s, %s, %s)", tmp1, tmp2, tmp3);
-                return buffer;
+                *opRes = success;
+		return buffer;
           }
+	*opRes = failedToPrint;
+	return NULL;
 
 }
 
@@ -203,15 +238,23 @@ char* printVector(vectors* v1[], int i){
 
 }*/
 
-int checkType(vectors* v1[], int add1, int add2){
+int checkType(vectors* v1[], int add1, int add2, errors* opRes){
 
 	add1 -= 1;
 	add2 -= 1;
 	if(v1[add1]->type->value != v1[add2]->type->value){
+		*opRes = differentTypes;
 		return -1; // different types
 	}else if(v1[add1]->type->value == 0){
-		 return 0; // int type
-	}else return 1; // float type
+		*opRes = success;
+		return 0; // int type
+	}else if(v1[add1]->type->value == 1){
+		*opRes = success;
+		 return 1; // float type
+	}else{
+		*opRes = failedToCheck;
+		return 400;
+	}
 }
 
 errors endProgram(vectors** v1, const int* vectorCount){
