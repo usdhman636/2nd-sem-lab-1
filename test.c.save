@@ -1,0 +1,85 @@
+#include "main.c"
+
+void vecCreateTest(int* vectorCount, int* arrCount, errors* opRes, char* x, char* y, char* z, float* tempX, float* tempY, float* tempZ, char* buffer){
+
+
+	if(vectorCount < MAXVECTORS - 1){
+                if((arrCount - vectorCount) == 1){
+
+                        vector = reallocVec(vector, &arrCount, &opRes);
+
+                }
+                vectorCount += 1;
+                    while (1) {
+        printf("\nВведите x: ");
+
+        if (sscanf(buffer, "%9s", x) != 1) {
+            clear_input_buffer();
+            printf("\nНеверный ввод, попробуйте еще раз.\n");
+            continue;
+        }
+
+        clear_input_buffer();
+
+        if(inputCheck(x) == 1){
+                printf("\nНеверный номер, попробуйте еще раз.\n");
+                continue;
+        }else break;
+    }
+
+    while (1) {
+        printf("\nВведите y: ");
+
+        if (sscanf(buffer, "%9s", y) != 1) {
+            clear_input_buffer();
+            printf("\nНеверный ввод, попробуйте еще раз.\n");
+            continue;
+        }
+
+        clear_input_buffer();
+
+        if(inputCheck(y) == 1){
+                printf("\nНеверный номер, попробуйте еще раз.\n");
+                continue;
+        }else break;
+    }
+
+    while (1) {
+        printf("\nВведите z: ");
+
+        if (scanf("%9s", z) != 1) {
+            clear_input_buffer();
+            printf("\nНеверный ввод, попробуйте еще раз.\n");
+            continue;
+        }
+
+        clear_input_buffer();
+
+        if(inputCheck(z) == 1){
+                printf("\nНеверный номер, попробуйте еще раз.\n");
+                continue;
+        }else break;
+    }
+
+                if(typeAssign(x, y, z, &tempX, &tempY, &tempZ) == 0){
+                vector[vectorCount] = createVector(getIntType(), tempX, tempY, tempZ, &opRes);
+                printf("\nВектор успешно создан!\n");
+                waitForEnter();
+                }else{
+                 vector[vectorCount] = createVector(getFloatType(), tempX, tempY, tempZ, &opRes);
+                 printf("\nВектор успешно создан!\n");
+                 waitForEnter();
+                 }// (else)
+          }else{ printf("\nОшибка! Достигнуто максимальное количество векторов.\n");// if vectorCount < MAXVECTORS
+                 waitForEnter();
+           }
+
+}
+
+vecDeleteTest();
+
+vecListTest();
+
+vecAddTest();
+
+vecDotTest();

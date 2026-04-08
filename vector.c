@@ -124,6 +124,7 @@ int vectorDotProduct(vectors* v1[], int* arg1, int* arg2, int* iDotProd, float* 
 
 		*iDotProd = *(int*)vecRes->x + *(int*)vecRes->y + *(int*)vecRes->z;
 		*opRes = success;
+		freeVector(vecRes);
 		return 0;
 
         }else {
@@ -143,6 +144,7 @@ int vectorDotProduct(vectors* v1[], int* arg1, int* arg2, int* iDotProd, float* 
 
 		*fDotProd = *(float*)vecRes->x + *(float*)vecRes->y + *(float*)vecRes->z;
                 *opRes = success;
+		freeVector(vecRes);
 		return 1;
 
         }

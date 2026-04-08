@@ -1,5 +1,5 @@
 #include <stdio.h>
-//#include <windows.h>
+#include <windows.h>
 
 #include "int.h"
 #include "float.h"
@@ -13,8 +13,8 @@
 
 int main()
 {
-//   SetConsoleOutputCP(CP_UTF8);
-//   SetConsoleCP(CP_UTF8);
+   SetConsoleOutputCP(CP_UTF8);
+   SetConsoleCP(CP_UTF8);
 
 int option = 0, deleteOpt = 0;
 int add1 = 0, add2 = 0;
@@ -85,7 +85,7 @@ while(1){
 		    while (1) {
         printf("\nВведите x: ");
 
-        if (scanf("%9s", x) != 1) {
+        if (scanf("%7s", x) != 1) {
             clear_input_buffer();
             printf("\nНеверный ввод, попробуйте еще раз.\n");
             continue;
@@ -102,7 +102,7 @@ while(1){
     while (1) {
         printf("\nВведите y: ");
 
-        if (scanf("%9s", y) != 1) {
+        if (scanf("%7s", y) != 1) {
             clear_input_buffer();
             printf("\nНеверный ввод, попробуйте еще раз.\n");
             continue;
@@ -119,7 +119,7 @@ while(1){
     while (1) {
         printf("\nВведите z: ");
 
-        if (scanf("%9s", z) != 1) {
+        if (scanf("%7s", z) != 1) {
             clear_input_buffer();
             printf("\nНеверный ввод, попробуйте еще раз.\n");
             continue;
@@ -317,71 +317,421 @@ while(1){
 	}
 
 	if(option == 6){
-/*		if(testTrigger == 1){
+		if(testTrigger == 1){
 			CLEAR_SCREEN();
-			printf("\nсоздание векторов...\n");
-			delay(1500);
-			vectorCount +=1;
-			vector[0] = createVector(getIntType(), 5, 3, 7, &result);
-			printf("\nПервый вектор успешно создан!\n");
-			printOneVector(vector, &(int){0}); printf("\n");
-			delay(1500);
-			vectorCount +=1;
-			vector[1] = createVector(getFloatType(), 9.35, 1.18, 6, &result);
-			printf("\nВторой вектор успешно создан!\n");
-			printOneVector(vector, &(int){1}); printf("\n");
-			vectorCount +=1;
-			vector[2] = createVector(getIntType(), 12, 4, 8, &result);
-			delay(1500);
-			printf("\nТретий вектор успешно создан!\n");
-			printOneVector(vector, &(int){2}); printf("\n");
-			delay(1500);
-			printVectors(vector, &vectorCount);
+			// creating vectors tests
+			// if input is not a number for each variable (x y z)
+			vectorCount += 1;
+                    while (1) {
+        printf("\nВведите x: ");
 
-			delay(2000);
-			printf("\nсложение векторов 1 и 2\n");
-			delay(1500);
-			if(checkType(vector, 1, 2) == -1){
-                        	printf("\nнесовместимые типы\n");
+        if (sscanf("x", "%9s", x) != 1) {
+            //clear_input_buffer();
+            //printf("\nНеверный ввод, попробуйте еще раз.\n");
+            //continue;
+        }
+
+        //clear_input_buffer();
+
+        if(inputCheck(x) == 1){
+                printf("\nНеверный номер, попробуйте еще раз.\n");
+                sscanf("8", "%9s", x);
+        }else break;
+	break;
+    }
+
+    while (1) {
+        printf("\nВведите y: ");
+
+        if (sscanf("y", "%9s", y) != 1) {
+            //clear_input_buffer();
+            //printf("\nНеверный ввод, попробуйте еще раз.\n");
+            //continue;
+        }
+
+        //clear_input_buffer();
+
+        if(inputCheck(y) == 1){
+                printf("\nНеверный номер, попробуйте еще раз.\n");
+                sscanf("3", "%9s", y);
+        }else break;
+	break;
+    }
+
+    while (1) {
+        printf("\nВведите z: ");
+
+        if (sscanf("z", "%9s", z) != 1) {
+            //clear_input_buffer();
+            //printf("\nНеверный ввод, попробуйте еще раз.\n");
+            //continue;
+        }
+
+        //clear_input_buffer();
+
+        if(inputCheck(z) == 1){
+                printf("\nНеверный номер, попробуйте еще раз.\n");
+                sscanf("2.5", "%9s", z);
+        }else break;
+	break;
+    }
+		if(typeAssign(x, y, z, &tempX, &tempY, &tempZ) == 0){
+                vector[vectorCount] = createVector(getIntType(), tempX, tempY, tempZ, &opRes);
+                printf("\nВектор успешно создан!\n");
+		printf("\n%d-%s\n",vectorCount+1,printVector(vector, vectorCount, &opRes));
+                }else{
+                 vector[vectorCount] = createVector(getFloatType(), tempX, tempY, tempZ, &opRes);
+                 printf("\nВектор успешно создан!\n");
+                 }// (else)
+
+			// -------1-------
+
+		// создать ноливой вектор int и float
+		vectorCount += 1;
+		vector[vectorCount] = createVector(getIntType(), (float){0}, (float){0}, (float){0}, &opRes);
+                printf("\nВектор успешно создан!\n");
+		printf("\n%d-%s\n",vectorCount+1,printVector(vector, vectorCount, &opRes));
+
+		vectorCount += 1;
+                vector[vectorCount] = createVector(getFloatType(), (float){0}, (float){0}, (float){0}, &opRes);
+                printf("\nВектор успешно создан!\n");
+                printf("\n%d-%s\n",vectorCount+1,printVector(vector, vectorCount, &opRes));
+
+		// создать отрицатильные векторы
+
+		vectorCount += 1;
+                vector[vectorCount] = createVector(getIntType(), (float){-6}, (float){-8}, (float){-5}, &opRes);
+                printf("\nВектор успешно создан!\n");
+                printf("\n%d-%s\n",vectorCount+1,printVector(vector, vectorCount, &opRes));
+
+		vectorCount += 1;
+                vector[vectorCount] = createVector(getFloatType(), (float){-1.948}, (float){-91.59}, (float){-8.37}, &opRes);
+                printf("\nВектор успешно создан!\n");
+                printf("\n%d-%s\n",vectorCount+1,printVector(vector, vectorCount, &opRes));
+
+		//создать бодьшие векторы
+		 vectorCount += 1;
+                    while (1) {
+        printf("\nВведите x: ");
+
+        if (sscanf("999999999999999", "%7s", x) != 1) {
+            //clear_input_buffer();
+            //printf("\nНеверный ввод, попробуйте еще раз.\n");
+            //continue;
+        }
+
+        //clear_input_buffer();
+
+        if(inputCheck(x) == 1){
+                printf("\nНеверный номер, попробуйте еще раз.\n");
+                sscanf("8", "%9s", x);
+        }else break;
+        break;
+    }
+
+    while (1) {
+        printf("\nВведите y: ");
+
+        if (sscanf("-999999999999999", "%7s", y) != 1) {
+            //clear_input_buffer();
+            //printf("\nНеверный ввод, попробуйте еще раз.\n");
+            //continue;
+        }
+
+        //clear_input_buffer();
+
+        if(inputCheck(y) == 1){
+                printf("\nНеверный номер, попробуйте еще раз.\n");
+                sscanf("3", "%9s", y);
+        }else break;
+        break;
+    }
+
+    while (1) {
+        printf("\nВведите z: ");
+
+        if (sscanf("999999999999999.9999999", "%7s", z) != 1) {
+            //clear_input_buffer();
+            //printf("\nНеверный ввод, попробуйте еще раз.\n");
+            //continue;
+        }
+
+        //clear_input_buffer();
+
+        if(inputCheck(z) == 1){
+                printf("\nНеверный номер, попробуйте еще раз.\n");
+                sscanf("2", "%9s", z);
+        }else break;
+        break;
+    }
+                if(typeAssign(x, y, z, &tempX, &tempY, &tempZ) == 0){
+                vector[vectorCount] = createVector(getIntType(), tempX, tempY, tempZ, &opRes);
+                printf("\nВектор успешно создан!\n");
+                printf("\n%d-%s\n",vectorCount+1,printVector(vector, vectorCount, &opRes));
+                }else{
+                 vector[vectorCount] = createVector(getFloatType(), tempX, tempY, tempZ, &opRes);
+                 printf("\nВектор успешно создан!\n");
+                 }// (else)
+
+		//создадть вектор когда reached MAXVECTORS
+		for(int i = 6; i < (MAXVECTORS); i++){
+
+			vectorCount += 1;
+			vector[vectorCount] = createVector(getIntType(), (float){0}, (float){0}, (float){0}, &opRes);
+                	printf("\nВектор успешно создан!\n");
+                	printf("\n%d-%s\n",vectorCount+1,printVector(vector, vectorCount, &opRes));
+
+		}
+		if(vectorCount < MAXVECTORS - 1){
+                if((arrCount - vectorCount) == 1){
+
+                        vector = reallocVec(vector, &arrCount, &opRes);
+
+                }
+                vectorCount += 1;
+                    while (1) {
+        printf("\nВведите x: ");
+
+        if (scanf("%7s", x) != 1) {
+            clear_input_buffer();
+            printf("\nНеверный ввод, попробуйте еще раз.\n");
+            continue;
+        }
+
+        clear_input_buffer();
+
+        if(inputCheck(x) == 1){
+                printf("\nНеверный номер, попробуйте еще раз.\n");
+                continue;
+        }else break;
+    }
+
+    while (1) {
+        printf("\nВведите y: ");
+
+        if (scanf("%7s", y) != 1) {
+            clear_input_buffer();
+            printf("\nНеверный ввод, попробуйте еще раз.\n");
+            continue;
+        }
+
+        clear_input_buffer();
+
+        if(inputCheck(y) == 1){
+                printf("\nНеверный номер, попробуйте еще раз.\n");
+                continue;
+        }else break;
+    }
+
+    while (1) {
+        printf("\nВведите z: ");
+
+        if (scanf("%7s", z) != 1) {
+            clear_input_buffer();
+            printf("\nНеверный ввод, попробуйте еще раз.\n");
+            continue;
+        }
+
+        clear_input_buffer();
+
+        if(inputCheck(z) == 1){
+                printf("\nНеверный номер, попробуйте еще раз.\n");
+                continue;
+        }else break;
+    }
+
+                if(typeAssign(x, y, z, &tempX, &tempY, &tempZ) == 0){
+                vector[vectorCount] = createVector(getIntType(), tempX, tempY, tempZ, &opRes);
+                printf("\nВектор успешно создан!\n");
+                waitForEnter();
+                }else{
+                 vector[vectorCount] = createVector(getFloatType(), tempX, tempY, tempZ, &opRes);
+                 printf("\nВектор успешно создан!\n");
+                 waitForEnter();
+                 }// (else)
+          }else{ printf("\nОшибка! Достигнуто максимальное количество векторов.\n");// if vectorCount < MAXVECTORS
+           }
+	 waitForEnter();
+
+	// show list if maxvectors is resched
+	if(vectorCount < 0){
+                printf("\nНет доступных векторов\n");
+                }else{
+                        for(int i = 0; i <= vectorCount; i++){
+                        printf("\n%d-%s\n",i+1,printVector(vector, i, &opRes));
+                        }
+
+	//delete out of bounds then delete last vector then delete first vector
+	while(1){
+                        if(!sscanf("51", "%d", &deleteOpt) || deleteOpt > vectorCount + 1 || deleteOpt < 1){
+                                printf("\nНеверный ввод, попробуйте еще раз:");
+                                deleteOpt = 50;
+				waitForEnter();
+                                break;
+                        }else clear_input_buffer(); break;
+                }
+                vectorDelete(vector, &vectorCount, &deleteOpt);
+                printf("\nВектор успешно удалён!\n");
+                for(int i = 0; i <= vectorCount; i++){
+                        printf("\n%d-%s\n",i+1,printVector(vector, i, &opRes));
+                        }
+		waitForEnter();
+		CLEAR_SCREEN();
+
+
+			deleteOpt = 1;
+			vectorDelete(vector, &vectorCount, &deleteOpt);
+			printf("\nВектор успешно удалён!\n");
+                	for(int i = 0; i <= vectorCount; i++){
+                        	printf("\n%d-%s\n",i+1,printVector(vector, i, &opRes));
+                        }
 			}
-			delay(2000);
-			printf("\nсложение векотров 1 и 3\n");
-			vectorCount +=1;
-			delay(1500);
-			vector[vectorCount] = vectorAdd(vector,&(int){0}, &(int){2});
-                	printf("\nВекторы успешно сложены!\n");
-			delay(1500);
-			printVectors(vector, &vectorCount);
-			delay(3000);
+			waitForEnter();
+			CLEAR_SCREEN();
+			//sum 2 vectors if MAXVECTORS is reached
+			vectorCount += 1;
+                	vector[vectorCount] = createVector(getIntType(), (float){0}, (float){0}, (float){0}, &opRes);
+			vectorCount += 1;
+                	vector[vectorCount] = createVector(getIntType(), (float){0}, (float){0}, (float){0}, &opRes);
+		        if(vectorCount == MAXVECTORS - 1){
+        	                printf("\nОшибка! Достигнуто максимальное количество векторов.\n");
+                	}
 
-			printf("\nнахождение скалярного произведения векторов 3 и 4\n");
-			fflush(stdout);
-			delay(1500);
-			vectorDotProduct(vector, &(int){2}, &(int){3}, &iDotProd, &fDotProd);
+			//dot prod if maxvectors reached
+			add1 = 2;
+			add2 = 2;
+			if(vectorDotProduct(vector, &add1, &add2, &iDotProd, &fDotProd, &opRes) == 0){
+                        	printf("\n");
+                        	printf("%s",printVector(vector, add1, &opRes));
+                        	printf(" • ");
+                        	printf("%s",printVector(vector, add2, &opRes));
+                        	printf(" = %d\n", iDotProd);
+                	}
+
+			//show list if empty delete if empty sum of empty dot prod if empty
+			for(int i = MAXVECTORS; i > 0; i--){
+				vectorDelete(vector, &vectorCount, &i);
+			}
+			if(vectorCount < 0){
+		                printf("\nНет доступных векторов\n");}
+			if(vectorCount < 0){
+                		printf("\nНет доступных векторов\n");}
+			if(vectorCount < 0){
+               			 printf("\nНет доступных векторов\n");}
+			if(vectorCount < 0){
+                		printf("\nНет доступных векторов\n");}
+
+			//add vectors together
+			//if only 1 vector in list
+			vectorCount += 1;
+                	vector[vectorCount] = createVector(getIntType(), (float){-6}, (float){-8}, (float){-5}, &opRes);
+                	printf("\nВектор успешно создан!\n");
+                	printf("\n%d-%s\n",vectorCount+1,printVector(vector, vectorCount, &opRes));
+
+			vectorCount += 1;
+	                add1 = 0;
+	                add2 = 0;
+	                vector[vectorCount] = vectorAdd(vector, &add1, &add2, &opRes);
+	                printf("\nВекторы успешно сложены!!\n");
+	                printf("\n%s\n",printVector(vector, vectorCount, &opRes));
+
+			// float + float
+			vectorCount += 1;
+	                vector[vectorCount] = createVector(getFloatType(), (float){6.28}, (float){-91.379}, (float){16}, &opRes);
+	                printf("\nВектор успешно создан!\n");
+	                printf("\n%d-%s\n",vectorCount+1,printVector(vector, vectorCount, &opRes));
+
+			vectorCount += 1;
+	                add1 = 2;
+	                add2 = 2;
+	                vector[vectorCount] = vectorAdd(vector, &add1, &add2, &opRes);
+	                printf("\nВекторы успешно сложены!!\n");
+	                printf("\n%s\n",printVector(vector, vectorCount, &opRes));
+
+			//int + float
+                        add1 = 2;
+                        add2 = 3;
+			if(checkType(vector, add1, add2, &opRes) == -1){
+                        printf("\nнесовместимые типы\n");
+			}
+			//float + int
+                        add1 = 3;
+                        add2 = 1;
+			if(checkType(vector, add1, add2, &opRes) == -1){
+                        printf("\nнесовместимые типы\n");
+			}
+
+			//dot prod
+			//if 1 vector
+			deleteOpt = 3;
+			vectorDelete(vector, &vectorCount, &deleteOpt);
+			deleteOpt = 2;
+			vectorDelete(vector, &vectorCount, &deleteOpt);
+
+			add1 = 0;
+                	add2 = 0;
+                if(vectorDotProduct(vector, &add1, &add2, &iDotProd, &fDotProd, &opRes) == 0){
                         printf("\n");
-                        printOneVector(vector, &(int){2});
-			fflush(stdout);
-			delay(1000);
+                        printf("%s",printVector(vector, add1, &opRes));
                         printf(" • ");
-			fflush(stdout);
-			delay(1000);
-                        printOneVector(vector, &(int){3});
-			fflush(stdout);
-			delay(1000);
+                        printf("%s",printVector(vector, add2, &opRes));
                         printf(" = %d\n", iDotProd);
-			delay(3000);
+                        //waitForEnter();
+                }else {
+                        printf("\n");
+                        printf("%s",printVector(vector, add1, &opRes));
+                        printf(" • ");
+                        printf("%s",printVector(vector, add2, &opRes));
+                        printf(" = %.3f\n", fDotProd);
+                        //waitForEnter();
+                }
 
-			printf("\nудаление вектора 2...\n");
-			delay(2000);
-			vectorDelete(vector, &vectorCount, &(int){2});
-                	printf("\nВектор успешно удалён!\n");
-			delay(2000);
-			printVectors(vector, &vectorCount);
+			// if float * float
+			vectorCount += 1;
+	                vector[vectorCount] = createVector(getFloatType(), (float){-6.83}, (float){28.19}, (float){26.194}, &opRes);
+	                printf("\nВектор успешно создан!\n");
+	                printf("\n%d-%s\n",vectorCount+1,printVector(vector, vectorCount, &opRes));
 
-			//freeing vectors
-			vectorDelete(vector, &vectorCount, &(int){3});
-			vectorDelete(vector, &vectorCount, &(int){2});
-			vectorDelete(vector, &vectorCount, &(int){1});
+			vectorCount += 1;
+                        vector[vectorCount] = createVector(getFloatType(), (float){-829.3}, (float){7.19}, (float){81.4}, &opRes);
+                        printf("\nВектор успешно создан!\n");
+                        printf("\n%d-%s\n",vectorCount+1,printVector(vector, vectorCount, &opRes));
+
+			add1 = 1;
+                	add2 = 2;
+                if(vectorDotProduct(vector, &add1, &add2, &iDotProd, &fDotProd, &opRes) == 0){
+                        printf("\n");
+                        printf("%s",printVector(vector, add1, &opRes));
+                        printf(" • ");
+                        printf("%s",printVector(vector, add2, &opRes));
+                        printf(" = %d\n", iDotProd);
+                        
+                }else {
+                        printf("\n");
+                        printf("%s",printVector(vector, add1, &opRes));
+                        printf(" • ");
+                        printf("%s",printVector(vector, add2, &opRes));
+                        printf(" = %.3f\n", fDotProd);
+                       
+                }
+
+			//if int • float
+			add1 = 1;
+			add2 = 2;
+			  if(checkType(vector, add1, add2, &opRes) == -1){
+                        	printf("\nнесовместимые типы\n");
+			  }
+
+			add1 = 3;
+			add2 = 1;
+			  if(checkType(vector, add1, add2, &opRes) == -1){
+                        	printf("\nнесовместимые типы\n");
+			  }
+
+			//deleting tests
+			for(int i = 4; i > 0; i--){
+			vectorDelete(vector, &vectorCount, &i);
+			}
 
 
 			testTrigger = -1;
@@ -394,7 +744,7 @@ while(1){
 			waitForEnter();
 			continue;
 
-		}*/
+		}
 	}
 }// main while loop
 
